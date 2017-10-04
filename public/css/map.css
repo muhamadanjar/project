@@ -1,0 +1,17 @@
+#map, #map_canvas, #mapgoogle {
+  width: 100% !important;
+  height: 100%;
+}
+
+#aksi-editor {
+  z-index: 0;
+  position: absolute;
+  right: 10px;
+  top: 40px;
+}
+
+.scroll-content {
+  height: 100%;
+}
+
+/*# sourceMappingURL=map.css.map */
