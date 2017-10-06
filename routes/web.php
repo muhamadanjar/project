@@ -35,6 +35,9 @@ Route::group(['prefix'=>'dokumen'], function(){
 });
 Route::group(['prefix'=>'kuesioner'], function(){
 	Route::get('/bangunan','BangunanCtrl@getIndex');
+	Route::get('/bangunan/getdata','BangunanCtrl@getData');
+	Route::get('/bangunankotaciawi/getdata','BangunanCtrl@getDataBangunanKotaCiawi');
+	
 	Route::get('/bangunan/tambah','BangunanCtrl@getTambah');
 	Route::post('/bangunan/upload','BangunanCtrl@postUpload');
 	Route::get('/tanah','TanahCtrl@getIndex');

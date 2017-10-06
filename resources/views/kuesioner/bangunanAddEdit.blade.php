@@ -188,7 +188,11 @@ if(session('aksi') == 'edit'){
 
 						<div class="form-group">
 							<label>Jenis Kelamin</label>
-							<input  class="form-control" name="jenis_kelamin" type="text" value="{{ $jenis_kelamin }}">
+							<select class="form-control" name="jenis_kelamin">
+								<option value="0">-----</option>
+								<option @if($jenis_kelamin == 'L') selected @endif value="L">Laki - Laki</option>
+								<option @if($jenis_kelamin == 'P') selected @endif value="P">Perempuan</option>
+							</select>
 							<div class="col-md-6">
 
 							</div>
@@ -196,7 +200,16 @@ if(session('aksi') == 'edit'){
 
 						<div class="form-group">
 							<label>Usia</label>
-							<input  class="form-control" name="usia" type="text" value="{{ $usia }}">
+							<select class="form-control" name="usia">
+								<option value="0">-----</option>
+
+								<option @if($usia == '< 20 tahun') selected @endif value="< 20 tahun">< 20 tahun</option>
+								<option @if($usia == '20 s.d. 30 tahun') selected @endif value="20 s.d. 30 tahun">20 s.d. 30 tahun</option>
+								<option @if($usia == '> 30 s.d. 40 tahun') selected @endif value="> 30 s.d. 40 tahun">> 30 s.d. 40 tahun</option>
+								<option @if($usia == '> 40 s.d. 50 tahun') selected @endif value="> 40 s.d. 50 tahun">> 40 s.d. 50 tahun</option>
+								<option @if($usia == '> 50 s.d. 55 tahun') selected @endif value="> 50 s.d. 55 tahun">> 50 s.d. 55 tahun</option>
+								<option @if($usia == '> 55 tahun') selected @endif value="> 55 tahun">> 55 tahun</option>
+							</select>
 							<div class="col-md-6">
 
 							</div>
@@ -204,7 +217,18 @@ if(session('aksi') == 'edit'){
 
 						<div class="form-group">
 							<label>Pendidikan Terakhir</label>
-							<input  class="form-control" name="pendidikanterakhir" type="text" value="{{ $pendidikanterakhir }}">
+							
+							<select class="form-control" name="pendidikanterakhir">
+								<option value="0">-----</option>
+
+								<option @if($pendidikanterakhir == 'Tidak sekolah atau tidak tamat SD') selected @endif value="Tidak sekolah atau tidak tamat SD">Tidak sekolah atau tidak tamat SD</option>
+								<option @if($pendidikanterakhir == 'Tamat SD / MI / sederajat') selected @endif value="Tamat SD / MI / sederajat">Tamat SD / MI / sederajat</option>
+								<option @if($pendidikanterakhir == 'Tamat SMP / MTs / sederajat') selected @endif value="Tamat SMP / MTs / sederajat">Tamat SMP / MTs / sederajat</option>
+								<option @if($pendidikanterakhir == 'Tamat SMA / MA / sederajat') selected @endif value="Tamat SMA / MA / sederajat">Tamat SMA / MA / sederajat</option>
+								<option @if($pendidikanterakhir == 'Tamat akademi (D1 / D2 / D3)') selected @endif value="Tamat akademi (D1 / D2 / D3)">Tamat akademi (D1 / D2 / D3)</option>
+								<option @if($pendidikanterakhir == 'Tamat sarjana (S1)') selected @endif value="Tamat sarjana (S1)">Tamat sarjana (S1)</option>
+								<option @if($pendidikanterakhir == 'Tamat pasca sarjana (S2 / S3)') selected @endif value="Tamat pasca sarjana (S2 / S3)">Tamat pasca sarjana (S2 / S3)</option>
+							</select>
 							<div class="col-md-6">
 
 							</div>
@@ -212,7 +236,12 @@ if(session('aksi') == 'edit'){
 
 						<div class="form-group">
 							<label>Status Rumah Tangga</label>
-							<input  class="form-control" name="statusrumahtangga" type="text" value="{{ $statusrumahtangga }}">
+							<select class="form-control" name="statusrumahtangga">
+								<option value="0">-----</option>
+								<option @if($statusrumahtangga == 'Bapak / Suami') selected @endif value="Bapak / Suami">Bapak / Suami</option>
+								<option @if($statusrumahtangga == 'Ibu / Istri') selected @endif value="Ibu / Istri">Ibu / Istri</option>
+								<option @if($statusrumahtangga == 'Anak') selected @endif value="Anak">Anak</option>
+							</select>
 							<div class="col-md-6">
 
 							</div>
@@ -220,7 +249,12 @@ if(session('aksi') == 'edit'){
 
 						<div class="form-group">
 							<label>Lama Tinggal</label>
-							<input  class="form-control" name="lamatinggal" type="text" value="{{ $lamatinggal }}">
+							<select class="form-control" name="lamatinggal">
+								<option value="0">-----</option>
+								<option @if($lamatinggal == 'Bapak / Suami') selected @endif value="Bapak / Suami">Bapak / Suami</option>
+								<option @if($lamatinggal == 'Ibu / Istri') selected @endif value="Ibu / Istri">Ibu / Istri</option>
+								<option @if($lamatinggal == 'Anak') selected @endif value="Anak">Anak</option>
+							</select>
 							<div class="col-md-6">
 
 							</div>

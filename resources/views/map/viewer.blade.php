@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,24 +11,24 @@
         <meta name="description" content="CMV - The Configurable Map Viewer. Community supported open source mapping framework. Works with the Esri JavaScript API, ArcGIS Server, ArcGIS Online and more. Make it your own!">
         <meta name="author" content="cmv.io">
         <link rel="shortcut icon" href="./favicon.png">
-        <title>Configurable Map Viewer</title>
+        <title>SISMIOPr</title>
         <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.21compact/esri/css/esri.css">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/viewermap/css/theme/flat/flat.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/viewermap/css/cmv-theme-overrides.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ url('css/theme/flat/flat.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ url('css/cmv-theme-overrides.css')}}">
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/viewermap/css/main.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ url('css/main.css')}}">
     </head>
     <body class="cmv flat">
         <div class="appHeader">
             <div class="headerLogo">
-                <img alt="logo" src="{{ asset('img/logo.png')}}" height="54" />
+                <img alt="logo" src="{{ url('images/rocket-logo.png')}}" height="54" />
             </div>
             <div class="headerTitle">
                 <span id="headerTitleSpan">
-                    Configurable Map Viewer
+                    SISMIOP
                 </span>
                 <div id="subHeaderTitleSpan" class="subHeaderTitle">
-                    make it your own
+                    
                 </div>
             </div>
             <div class="search">
@@ -51,6 +52,6 @@
             <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.3/es5-shim.min.js"></script>
         <![endif]-->
         <script src="https://js.arcgis.com/3.21compact/"></script>
-        <script src="{{ asset('/viewermap/js/config/app.js')}}"></script>
+        <script src="{{ url('js/config/app.js')}}"></script>
     </body>
 </html>

@@ -5,13 +5,13 @@
         packages: [
             {
                 name: 'viewer',
-                location: 'viewer/js/viewer'
+                location: '/' + 'js/viewer'
             }, {
                 name: 'gis',
-                location: 'viewer/js/gis'
+                location: '/' + 'js/gis'
             }, {
                 name: 'config',
-                location: 'viewer/js/config'
+                location: '/' + 'js/config'
             }, {
                 name: 'proj4js',
                 location: '//cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15'

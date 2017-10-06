@@ -4,15 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Bangunan;
-use Yajra\DataTables\Facades\DataTables;
+use Yajra\Datatables\Datatables;
+use DB;
 class BangunanCtrl extends Controller{
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function getIndex(){
         return view('kuesioner.bangunanIndex');
     }
     public function getData(){
-        $user = Bangunan::select();
+        
+        $bangunan = DB::table('kuesioner_bangunan')->select(['no_responden', 'nama', 'jeniskontruksi', 'pemanfaatanbangunan', 'sumberinformasi']);
+        
+        return Datatables::of($bangunan)->make(true);
 
-        return DataTables::of($user)->make();
+    }
+
+    public function getDataBangunanKotaCiawi(){
+        
+        $bangunan = DB::table('bangunan_kota_ciawi')->select(['nama', 'sumber', 'tahun']);
+        return Datatables::of($bangunan)->make(true);
     }
 
     public function getTambah(){
@@ -32,6 +46,7 @@ class BangunanCtrl extends Controller{
             $bangunan = new Bangunan();
             $bangunan->no_responden = $request->no_responden;
             $bangunan->jorong = $request->jorong;
+            $bangunan->foto = $request->foto;
             $bangunan->save();
             
             DB::commit();

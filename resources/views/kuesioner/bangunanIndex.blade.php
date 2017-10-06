@@ -36,6 +36,22 @@
 
                  
             </table>
+
+            <table id="table_bangunankotaciawi" class="display table table-responsive table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th width="3%"></th>
+                        <th>Nama</th>
+                        <th>Sumber</th>
+                        <th>Tahun</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                </tbody>
+
+                 
+            </table>
         </div>
     </div>
 
