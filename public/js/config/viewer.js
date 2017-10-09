@@ -78,8 +78,8 @@ define([
         // map options, passed to map constructor. see: https://developers.arcgis.com/javascript/jsapi/map-amd.html#map1
         mapOptions: {
             basemap: 'streets',
-            center: [-96.59179687497497, 39.09596293629694],
-            zoom: 5,
+            center: [98.146579,3.4811837],
+            zoom: 8,
             sliderStyle: 'small'
         },
 
@@ -306,6 +306,14 @@ define([
                 }]
             }
         */
+        },{
+            type: 'dynamic',
+            url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer',
+            title: 'Administrasi',
+            options: {
+                id: 'peta_admin',
+                visible: false
+            }
         }],
         // set include:true to load. For titlePane type set position the the desired order in the sidebar
         widgets: {
@@ -633,7 +641,7 @@ define([
                 }
             },
             locale: {
-                include: true,
+                include: false,
                 type: has('phone') ? 'titlePane' : 'domNode',
                 id: 'locale',
                 position: 0,

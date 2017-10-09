@@ -7,7 +7,7 @@ define({
             landsatShaded: 'Landsat Shaded'
         },
         bookmarks: {
-            nullIsland: 'Null Island',
+            nullIsland: 'Kosong',
             usa: 'USA'
         },
         find: {
@@ -29,24 +29,24 @@ define({
                 sf311Incidents: 'San Francisco 311 Incidents'
             },
             titles: {
-                header: 'Configurable Map Viewer',
-                pageTitle: 'Configurable Map Viewer',
+                header: 'SISMIOP',
+                pageTitle: 'SISMIOP',
                 subHeader: 'make it your own'
             },
             widgets: {
-                bookmarks: 'Bookmarks',
+                bookmarks: 'Penanda Letak',
                 directions: 'Directions',
                 draw: 'Draw',
-                editor: 'Editor',
-                find: 'Find',
-                help: 'Help',
+                editor: 'Edit Data',
+                find: 'Pencarian',
+                help: 'Bantuan',
                 identify: 'Identify',
-                measure: 'Measurement',
+                measure: 'Alat Ukur',
                 layerControl: 'Layers',
-                legend: 'Legend',
+                legend: 'Legenda',
                 locale: 'Locale',
-                print: 'Print',
-                search: 'Search',
+                print: 'Cetak..',
+                search: 'Cari..',
                 streetview: 'Google Street View'
             }
         }

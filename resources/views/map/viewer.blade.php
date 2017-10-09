@@ -11,7 +11,7 @@
         <meta name="description" content="CMV - The Configurable Map Viewer. Community supported open source mapping framework. Works with the Esri JavaScript API, ArcGIS Server, ArcGIS Online and more. Make it your own!">
         <meta name="author" content="cmv.io">
         <link rel="shortcut icon" href="./favicon.png">
-        <title>SISMIOPr</title>
+        <title>{{ config('app.name') }}</title>
         <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.21compact/esri/css/esri.css">
         <link rel="stylesheet" type="text/css" href="{{ url('css/theme/flat/flat.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ url('css/cmv-theme-overrides.css')}}">
@@ -21,11 +21,11 @@
     <body class="cmv flat">
         <div class="appHeader">
             <div class="headerLogo">
-                <img alt="logo" src="{{ url('images/rocket-logo.png')}}" height="54" />
+                <img alt="logo" src="{{ url('assets/img/logo.png')}}" height="54" />
             </div>
             <div class="headerTitle">
                 <span id="headerTitleSpan">
-                    SISMIOP
+                    {{ config('app.name') }}
                 </span>
                 <div id="subHeaderTitleSpan" class="subHeaderTitle">
                     

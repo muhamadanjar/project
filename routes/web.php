@@ -62,6 +62,22 @@ Route::group(['prefix'=>'map'], function(){
 	Route::get('/view','MapCtrl@getViewer');
 });
 
+Route::group(array('prefix'=>'layers'), function(){
+	Route::get('/','LayerCtrl@getIndex');
+	Route::get('/tambah','LayerCtrl@getTambah');
+	Route::post('/addedit','LayerCtrl@postTambah');
+	Route::get('/{id}/ubah','LayerCtrl@getUbah');
+	Route::get('/{id}/hapus','LayerCtrl@getHapus');
+	Route::get('/getdata','LayerCtrl@getData');
+	Route::get('/custom','LayerCtrl@custom');
+	Route::get('/layerinfo/{id}','LayerCtrl@getLayerinfo');
+	Route::get('/layerinfopopup/{id}/{idx}/{layern}','LayerCtrl@getLayerinfopopup');
+	Route::post('/layerinfopopup/{id}/{idx}/{layern}','LayerCtrl@postLayerinfopopup');
+	Route::get('/layeresrihapus/{id}','LayerCtrl@getLayeresrihapus');
+	Route::get('/setting-url','LayerCtrl@getSettingUrl');
+	Route::post('/setting-url','LayerCtrl@postSettingUrl');
+	
+});
 
 Route::group(array('prefix'=>'api'), function(){
 

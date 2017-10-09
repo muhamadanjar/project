@@ -19,6 +19,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li><a href="{{ url('master/provinsi')}}"><i class="fa fa-circle-o"></i> Provinsi</a></li>
+            <li><a href="{{ url('master/kabupaten')}}"><i class="fa fa-circle-o"></i> Kabupaten</a></li>
             <li><a href="{{ url('master/kecamatan')}}"><i class="fa fa-circle-o"></i> Kecamatan</a></li>
             <li><a href="{{ url('master/desa')}}"><i class="fa fa-circle-o"></i> Desa / Nagari</a></li>
           </ul>
@@ -47,6 +49,14 @@
         <li>
           <a href="{{ url('map') }}">
             <i class="fa fa-map"></i> <span>Peta</span>
+            <span>
+              <i></i>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url('map/view') }}">
+            <i class="fa fa-map"></i> <span>Peta ArcGis</span>
             <span>
               <i></i>
             </span>

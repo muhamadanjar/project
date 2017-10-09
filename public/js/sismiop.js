@@ -270,7 +270,48 @@ function base64image(resFile) {
 
     var table_user = $('#table_user').DataTable();
     var table_role = $('#table_role').DataTable();
+    $('#table_layer').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '/layers/getdata',
+        columns: [
+            {
+                //"className":      'details-control',
+                "orderable":      false,
+                "searchable":      false,
+                "data":           null,
+                "defaultContent":   
+                    '<div class="input-group margin">' +
+                        '<div class="input-group-btn">' +
+                            '<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">' +
+                            '<span class="fa fa-caret-down"></span></button>' +
+                            '<ul class="dropdown-menu">' +
+                                '<li><a class="edit">Edit</a></li>' +
+                                '<li><a class="hapus">Hapus</a></li>' +
+                            '</ul>' +
+                        '</div>' +
+                    '</div>' 
+                ,
+            },
+            {data: 'layername'},
+            {data: 'layerurl'},
+            {data: 'layer'},
+            
+        ],
+        initComplete: function () {
+            this.api().columns().every(function () {
+                var column = this;
+                var input = document.createElement("input");
+                $(input).appendTo($(column.footer()).empty())
+                .on('change', function () {
+                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
 
+                    column.search(val ? val : '', true, false).draw();
+                });
+            });
+        }
+        
+    });
     $('#table_bangunan').DataTable({
         processing: true,
         serverSide: true,
