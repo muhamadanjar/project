@@ -121,7 +121,7 @@ if(session('aksi') == 'edit'){
 }
 ?>
 
-<form role="form" method="POST" enctype="multipart/form-data" action="{{ url('/kuesioner/tanah/post') }}">
+<form role="form" method="POST" enctype="multipart/form-data" action="{{ url('/kuesioner/bangunan/post') }}">
 	<div class="row">
 		<div class="col-md-8">
 			<div class="box box-default">
@@ -262,9 +262,10 @@ if(session('aksi') == 'edit'){
 							<label>Lama Tinggal</label>
 							<select class="form-control" name="lamatinggal">
 								<option value="0">-----</option>
-								<option @if($lamatinggal == 'Bapak / Suami') selected @endif value="Bapak / Suami">Bapak / Suami</option>
-								<option @if($lamatinggal == 'Ibu / Istri') selected @endif value="Ibu / Istri">Ibu / Istri</option>
-								<option @if($lamatinggal == 'Anak') selected @endif value="Anak">Anak</option>
+								<option @if($lamatinggal == '< 2 tahun') selected @endif value="< 2 tahun">< 2 tahun</option>
+								<option @if($lamatinggal == '2 s.d. 5 tahun') selected @endif value="2 s.d. 5 tahun">2 s.d. 5 tahun</option>
+								<option @if($lamatinggal == '> 5 s.d. 10 tahun') selected @endif value="> 5 s.d. 10 tahun">> 5 s.d. 10 tahun</option>
+								<option @if($lamatinggal == '> 10 tahun') selected @endif value="> 10 tahun">> 10 tahun</option>
 							</select>
 							<div class="col-md-6">
 
@@ -273,7 +274,12 @@ if(session('aksi') == 'edit'){
 
 						<div class="form-group">
 							<label>Jumlah Orang</label>
-							<input  class="form-control" name="jumlahorang" type="text" value="{{ $jumlahorang }}">
+							<select class="form-control" name="jumlahorang">
+								<option value="0">-----</option>
+								<option @if($jumlahorang == '3 - 5 orang') selected @endif value="3 - 5 orang">3 - 5 orang</option>
+								<option @if($jumlahorang == '6 - 8 orang') selected @endif value="6 - 8 orang">6 - 8 orang</option>
+								<option @if($jumlahorang == '> 8 orang') selected @endif value="> 8 orang">> 8 orang</option>
+							</select>
 							<div class="col-md-6">
 
 							</div>
@@ -281,7 +287,14 @@ if(session('aksi') == 'edit'){
 
 						<div class="form-group">
 							<label>Jumlah KK</label>
-							<input  class="form-control" name="jumlahkk" type="text" value="{{ $jumlahkk }}">
+							<select class="form-control" name="jumlahkk">
+								<option value="0">-----</option>
+								<option @if($jumlahkk == '1 KK') selected @endif value="1 KK">1 KK</option>
+								<option @if($jumlahkk == '2 KK') selected @endif value="2 KK">2 KK</option>
+								<option @if($jumlahkk == '3 KK') selected @endif value="3 KK">3 KK</option>
+								<option @if($jumlahkk == '4 KK') selected @endif value="4 KK">4 KK</option>
+								<option @if($jumlahkk == '5 KK') selected @endif value="5 KK">5 KK</option>
+							</select>
 							<div class="col-md-6">
 
 							</div>
@@ -289,7 +302,14 @@ if(session('aksi') == 'edit'){
 
 						<div class="form-group">
 							<label>Status Kependudukan</label>
-							<input  class="form-control" name="statuskependudukan" type="text" value="{{ $statuskependudukan }}">
+							<select class="form-control" name="statuskependudukan">
+								<option value="0">-----</option>
+								<option @if($statuskependudukan == 'Suami & istri penduduk asli') selected @endif value="Suami & istri penduduk asli">Suami & istri penduduk asli</option>
+								<option @if($statuskependudukan == 'Suami & istri bukan penduduk asli') selected @endif value="Suami & istri bukan penduduk asli">Suami & istri bukan penduduk asli</option>
+								<option @if($statuskependudukan == 'Suami penduduk asli, istri pendatang') selected @endif value="Suami penduduk asli, istri pendatang">Suami penduduk asli, istri pendatang</option>
+								<option @if($statuskependudukan == 'Istri penduduk asli, suami pendatang') selected @endif value="Istri penduduk asli, suami pendatang">Istri penduduk asli, suami pendatang</option>
+								
+							</select>
 							<div class="col-md-6">
 
 							</div>
@@ -297,7 +317,17 @@ if(session('aksi') == 'edit'){
 
 						<div class="form-group">
 							<label>Kepemilikan KTP</label>
-							<input  class="form-control" name="kepemilikanktp" type="text" value="{{ $kepemilikanktp }}">
+							
+							<select class="form-control" name="kepemilikanktp">
+								<option value="0">-----</option>
+								<option @if($kepemilikanktp == 'Tidak memiliki KTP') selected @endif value="Tidak memiliki KTP">Suami & istri penduduk asli</option>
+								<option @if($kepemilikanktp == 'Memiliki KTP dengan alamat yang sesuai dengan alamat rumah ini') selected @endif value="Memiliki KTP dengan alamat yang sesuai dengan alamat rumah ini">Memiliki KTP dengan alamat yang sesuai dengan alamat rumah ini</option>
+								<option @if($kepemilikanktp == 'Memiliki KTP desa ini, tetapi alamatnya tidak sesuai alamat rumah ini') selected @endif value="Memiliki KTP desa ini, tetapi alamatnya tidak sesuai alamat rumah ini">Memiliki KTP desa ini, tetapi alamatnya tidak sesuai alamat rumah ini</option>
+								<option @if($kepemilikanktp == 'Memiliki KTP luar desa ini') selected @endif value="Memiliki KTP luar desa ini">Memiliki KTP luar desa ini</option>
+								<option @if($kepemilikanktp == 'Memiliki KTP musiman') selected @endif value="Memiliki KTP musiman">Memiliki KTP musiman</option>
+								
+							</select>
+							
 							<div class="col-md-6">
 
 							</div>
@@ -305,7 +335,12 @@ if(session('aksi') == 'edit'){
 
 						<div class="form-group">
 							<label>Kepemilikan KK</label>
-							<input  class="form-control" name="kepemilikankk" type="text" value="{{ $kepemilikankk }}">
+							<select class="form-control" name="kepemilikankk">
+								<option value="0">-----</option>
+								<option @if($kepemilikankk == 'Tidak memiliki Kartu Keluarga') selected @endif value="Tidak memiliki KTP">Tidak memiliki Kartu Keluarga</option>
+								<option @if($kepemilikankk == 'Memiliki Kartu Keluarga dengan alamat yang sesuai dengan rumah ini') selected @endif value="Memiliki Kartu Keluarga dengan alamat yang sesuai dengan rumah ini">Memiliki Kartu Keluarga dengan alamat yang sesuai dengan rumah ini</option>
+								<option @if($kepemilikankk == 'Memiliki Kartu Keluarga, tetapi alamatnya tidak sesuai dengan rumah ini') selected @endif value="Memiliki Kartu Keluarga, tetapi alamatnya tidak sesuai dengan rumah ini">Memiliki Kartu Keluarga, tetapi alamatnya tidak sesuai dengan rumah ini</option>
+							</select>
 							<div class="col-md-6">
 
 							</div>
@@ -313,7 +348,15 @@ if(session('aksi') == 'edit'){
 
 						<div class="form-group">
 							<label>Status Kepemilikan Tanah</label>
-							<input  class="form-control" name="statuskepemilikantanah" type="text" value="{{ $statuskepemilikantanah }}">
+							<select class="form-control" name="statuskepemilikantanah">
+								<option value="0">-----</option>
+								<option @if($statuskepemilikantanah == 'Sertifikat Hak Milik (SHM)') selected @endif value="Sertifikat Hak Milik (SHM)">Sertifikat Hak Milik (SHM)</option>
+								<option @if($statuskepemilikantanah == 'Hak Guna Bangunan (HGB)') selected @endif value="Hak Guna Bangunan (HGB)">Hak Guna Bangunan (HGB)</option>
+								<option @if($statuskepemilikantanah == 'Girik') selected @endif value="Girik">Girik</option>
+								<option @if($statuskepemilikantanah == 'Tanah publik / tanah negara') selected @endif value="Tanah publik / tanah negara">Tanah publik / tanah negara</option>
+								<option @if($statuskepemilikantanah == 'Tanah milik orang lain') selected @endif value="Tanah milik orang lain">Tanah milik orang lain</option>
+								
+							</select>
 							<div class="col-md-6">
 
 							</div>
@@ -321,9 +364,18 @@ if(session('aksi') == 'edit'){
 
 						<div class="form-group">
 							<label>Status Kepemilikan Rumah</label>
-							<input  class="form-control" name="statuskepemilikanrumah" type="text" value="{{ $statuskepemilikanrumah }}">
+							
+							<select class="form-control" name="statuskepemilikanrumah">
+								<option value="0">-----</option>
+								<option @if($statuskepemilikanrumah == 'Milik sendiri') selected @endif value="Milik sendiri">Milik sendiri</option>
+								<option @if($statuskepemilikanrumah == 'Milik keluarga') selected @endif value="Milik keluarga">Milik keluarga</option>
+								<option @if($statuskepemilikanrumah == 'Sewa bulanan') selected @endif value="Sewa bulanan">Sewa bulanan</option>
+								<option @if($statuskepemilikanrumah == 'Kontrak tahunan') selected @endif value="Kontrak tahunan">Kontrak tahunan</option>
+								<option @if($statuskepemilikanrumah == 'Menumpang') selected @endif value="Menumpang">Menumpang</option>
+								
+							</select>
 							<div class="col-md-6">
-
+							
 							</div>
 						</div>
 
@@ -591,22 +643,23 @@ if(session('aksi') == 'edit'){
 							<div class="col-md-12">
 								<div class="form-group">
 									<label>X</label>
-									<input  class="form-control" name="x" type="text" value="{{ $x }}">
+									<input  class="form-control" name="latitude" type="text" value="{{ $x }}">
 								</div>
 								<div class="form-group">
 									<label>Y</label>
-									<input  class="form-control" name="y" type="text" value="{{ $y }}">
+									<input  class="form-control" name="longitude" type="text" value="{{ $y }}">
 								</div>
 								<div class="form-group">
-									<button type="button">Lokasi</button>
+									<button type="button" id="checkmap" class="btn btn-primary btn-flat">Lokasi</button>
+									<button type="button" id="checkin" class="btn btn-primary btn-flat">Check In</button>
 								</div>
 							</div>
 							
 						</div>
 						
 					</div>
-				</div>
 			</div>
+		</div>
 	</div>
 </form>
 @endsection

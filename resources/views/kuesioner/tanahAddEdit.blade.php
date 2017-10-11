@@ -73,16 +73,33 @@ if(session('aksi') == 'edit'){
 						</div>
 
 						<div class="form-group">
-							<label>Nama Pemilik</label>
-							<input  class="form-control" name="kepemilikan_lahan" type="text" value="{{ $kepemilikan_lahan }}">
+							<label>Kepemilikan Lahan</label>
+							<select class="form-control" name="kepemilikan_lahan">
+								<option value="0">-----</option>
+								<option @if($kepemilikan_lahan == 'Sertifikat Hak Milik (SHM)') selected @endif value="Sertifikat Hak Milik (SHM)">Sertifikat Hak Milik (SHM)</option>
+								<option @if($kepemilikan_lahan == 'Hak Guna Bangunan (HGB)') selected @endif value="Hak Guna Bangunan (HGB)">Hak Guna Bangunan (HGB)</option>
+								<option @if($kepemilikan_lahan == 'Girik') selected @endif value="Girik">Girik</option>
+								<option @if($kepemilikan_lahan == 'Tanah publik / tanah negara') selected @endif value="Tanah publik / tanah negara">Tanah publik / tanah negara</option>
+								<option @if($kepemilikan_lahan == 'Tanah milik orang lain') selected @endif value="Tanah milik orang lain">Tanah milik orang lain</option>
+								
+							</select>
 							<div class="col-md-6">
 
 							</div>
 						</div>
-
+						
 						<div class="form-group">
 							<label>Pemanfaatan Tanah</label>
-							<input  class="form-control" name="pemanfaatan_tanah" type="text" value="{{ $pemanfaatan_tanah }}">
+							
+							<select class="form-control" name="pemanfaatan_tanah">
+								<option value="0">-----</option>
+								<option @if($pemanfaatan_tanah == 'Sawah') selected @endif value="Sawah">Sawah</option>
+								<option @if($pemanfaatan_tanah == 'Kebun') selected @endif value="Kebun">Kebun</option>
+								<option @if($pemanfaatan_tanah == 'Makam') selected @endif value="Makam">Makam</option>
+								<option @if($pemanfaatan_tanah == 'Empang') selected @endif value="Empang">Empang</option>
+								<option @if($pemanfaatan_tanah == 'Tidak ada') selected @endif value="Tidak ada">Tidak ada</option>
+								
+							</select>
 							<div class="col-md-6">
 
 							</div>
