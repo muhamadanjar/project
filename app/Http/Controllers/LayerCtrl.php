@@ -100,7 +100,7 @@ class LayerCtrl extends Controller
 		return $layer->roles;
     }
     public function getData(){
-        $layer = DB::table('layeresri')->select(['layername', 'layerurl', 'layer']);
+        $layer = DB::table('layeresri')->select(['id_layer','layername', 'layerurl', 'layer']);
         return Datatables::of($layer)->make(true);
     }
 

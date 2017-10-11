@@ -17,7 +17,7 @@ class BangunanCtrl extends Controller{
     }
     public function getData(){
         
-        $bangunan = DB::table('kuesioner_bangunan')->select(['no_responden', 'nama', 'jeniskontruksi', 'pemanfaatanbangunan', 'sumberinformasi']);
+        $bangunan = DB::table('kuesioner_bangunan')->select(['id','no_responden', 'nama', 'jeniskontruksi', 'pemanfaatanbangunan', 'sumberinformasi']);
         
         return Datatables::of($bangunan)->make(true);
 
@@ -36,8 +36,8 @@ class BangunanCtrl extends Controller{
 
     public function getEdit($id){
         session(['aksi'=>'edit']);
-        $tanah = Tanah::find($id);
-        return view('kuesioner.bangunanAddEdit')->withTanah($tanah);
+        $bangunan = Bangunan::find($id);
+        return view('kuesioner.bangunanAddEdit')->withBangunan($bangunan);
     }
 
     public function postBangunan(Request $request){

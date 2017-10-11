@@ -442,11 +442,13 @@
 <script src="{{ asset('assets/plugins/flot/jquery.flot.pie.min.js')}}"></script>
 <!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
 <script src="{{ asset('assets/plugins/flot/jquery.flot.categories.min.js')}}"></script>
+<script>
+  window.Laravel = {};
+  window.Laravel.csrfToken = '{{ csrf_token() }}';
+</script>
 
-@yield('js_tambahan')
 <!-- assets for demo purposes -->
 <script src="{{ asset('assets/dist/js/demo.js')}}"></script>
-
 <script src="{{ asset('/js/sismiop.js')}}"></script>
 @yield('js_tambahan')
 </body>

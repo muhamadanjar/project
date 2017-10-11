@@ -4,6 +4,7 @@ $.ajaxSetup({
 $.fn.rowCount = function() {
     return $('tr', $(this).find('tbody')).length;
 };
+
 var permission;
 $.extend({
     getValues: function(url) {
@@ -100,6 +101,22 @@ function base64image(resFile) {
     reader.onloadend = function(evt) {
       return (evt.target.result);
     }
+}
+
+function loaddatawilayah(url){
+    console.log('Load adata')
+    return $.ajax({
+        url: url,
+        dataType: "json",
+        beforeSend: function() {
+            $('.loader').show();
+            $("#loader-wrapper").show();
+        },
+        success:function(data){
+            return data;
+        }
+    });
+    
 }
 (function($, window, document){
     $("#loader-wrapper").hide();
@@ -270,7 +287,7 @@ function base64image(resFile) {
 
     var table_user = $('#table_user').DataTable();
     var table_role = $('#table_role').DataTable();
-    $('#table_layer').DataTable({
+    var table_layer = $('#table_layer').DataTable({
         processing: true,
         serverSide: true,
         ajax: '/layers/getdata',
@@ -287,7 +304,7 @@ function base64image(resFile) {
                             '<span class="fa fa-caret-down"></span></button>' +
                             '<ul class="dropdown-menu">' +
                                 '<li><a class="edit">Edit</a></li>' +
-                                '<li><a class="hapus">Hapus</a></li>' +
+                                '<li data-title="Hapus Layer" data-message="Hapus Layer ??"><a class="hapus">Hapus</a></li>' +
                             '</ul>' +
                         '</div>' +
                     '</div>' 
@@ -312,12 +329,75 @@ function base64image(resFile) {
         }
         
     });
-    $('#table_bangunan').DataTable({
+    $('#table_layer tbody').on('click', 'a',function(e) {
+        var data =  table_layer.row($(this).parents('tr')).data();
+        var id = data.id_layer;
+        //console.log(data);
+        if ($(this).hasClass('edit')) {
+            document.location ='/layers/'+id+'/ubah';
+        }else if ($(this).hasClass('lihat')) {
+            document.location ='/layers/'+id+'/lihat';
+        }else if($(this).hasClass('hapus')){
+            e.preventDefault();
+            var el = $(this).parent();
+            var title = el.attr('data-title');
+            var msg = el.attr('data-message');
+            var dataForm = el.attr('data-form');
+           
+            var newForm = jQuery('<form>', {
+                'action': '/layers/'+id+'/hapus',
+                'target': '_top',
+                'method' : 'post',
+            }).append(jQuery('<input>', {
+                'name': '_method',
+                'value': 'DELETE',
+                'type': 'hidden'
+            })).append($('<input />',{
+                'name': '_token',
+                'value': $('meta[name="_token"]').attr('content'),
+                'type': 'hidden'
+            }));
+
+            $('#formConfirm')
+            .find('#frm_body').html('<h6>'+msg+'</h6>').append(newForm)
+            .end().find('#frm_title').html(title)
+            .end().modal('show');
+            
+            $('#formConfirm').find('#frm_submit').attr('data-form', dataForm);
+
+            
+            $('#formConfirm').on('click', '#frm_submit', function(e) {
+                //var id = $(this).attr('data-form');
+                //console.log(newForm);
+                newForm.submit();
+                //$(id).submit();
+            });
+        }
+        table_layer.draw();
+    });
+    var table_bangunan = $('#table_bangunan').DataTable({
         processing: true,
         serverSide: true,
         ajax: '/kuesioner/bangunan/getdata',
         columns: [
-            
+            {
+                //"className":      'details-control',
+                "orderable":      false,
+                "searchable":      false,
+                "data":           null,
+                "defaultContent":   
+                    '<div class="input-group margin">' +
+                        '<div class="input-group-btn">' +
+                            '<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">' +
+                            '<span class="fa fa-caret-down"></span></button>' +
+                            '<ul class="dropdown-menu">' +
+                                '<li><a class="edit">Edit</a></li>' +
+                                '<li data-title="Hapus Bangunan" data-message="Hapus Bangunan ??"><a class="hapus">Hapus</a></li>' +
+                            '</ul>' +
+                        '</div>' +
+                    '</div>' 
+                ,
+            },
             {data: 'no_responden', name: 'no_responden'},
             {data: 'nama', name: 'nama'},
             {data: 'jeniskontruksi', name: 'jeniskontruksi'},
@@ -337,6 +417,52 @@ function base64image(resFile) {
             });
         }
     });
+    $('#table_bangunan tbody').on('click', 'a',function(e) {
+        var data =  table_bangunan.row($(this).parents('tr')).data();
+        var id = data.id;
+        //console.log(data);
+        if ($(this).hasClass('edit')) {
+            document.location ='/kuesioner/bangunan/'+id+'/ubah';
+        }else if ($(this).hasClass('lihat')) {
+            document.location ='/kuesioner/bangunan/'+id+'/lihat';
+        }else if($(this).hasClass('hapus')){
+            e.preventDefault();
+            var el = $(this).parent();
+            var title = el.attr('data-title');
+            var msg = el.attr('data-message');
+            var dataForm = el.attr('data-form');
+           
+            var newForm = jQuery('<form>', {
+                'action': '/kuesioner/bangunan/'+id+'/hapus',
+                'target': '_top',
+                'method' : 'post',
+            }).append(jQuery('<input>', {
+                'name': '_method',
+                'value': 'DELETE',
+                'type': 'hidden'
+            })).append($('<input />',{
+                'name': '_token',
+                'value': $('meta[name="_token"]').attr('content'),
+                'type': 'hidden'
+            }));
+
+            $('#formConfirm')
+            .find('#frm_body').html('<h6>'+msg+'</h6>').append(newForm)
+            .end().find('#frm_title').html(title)
+            .end().modal('show');
+            
+            $('#formConfirm').find('#frm_submit').attr('data-form', dataForm);
+
+            $('#formConfirm').on('click', '#frm_submit', function(e) {
+                //var id = $(this).attr('data-form');
+                //console.log(newForm);
+                newForm.submit();
+                //$(id).submit();
+            });
+        }
+        table_bangunan.draw();
+    });
+
     $('#table_bangunankotaciawi').DataTable({
         processing: true,
         serverSide: true,
@@ -410,122 +536,124 @@ function base64image(resFile) {
     var kabkota = $('select#kabkota');
     var kecamatan = $('select#kecamatan');
     var desa = $('select#desa');
-    $('.loader').hide();
-    /*provinsi.select2(); 
-    //$('select#kabkota').html("<option value=''>Pilih Kota..</option>"); 
-    //$('select#kabkota').select2();
+    xhr_get('/api/getprovinsi');
     
-    $('select#provinsi').on('change', function (){
-        $('select#kabkota').html("<option value=''>Pilih Kota..</option>");// add this on each call then add the options when data receives from the request
-        $.ajax({
-            url: '/getKabKota/'+$(this).val(),
-            dataType: "json",
-            beforeSend: function() {
-                $('.loader').show();
-            },
-            success: function(data) {
-                $('select#kabkota').empty(); 
-            
-                var options = '<option value="0">Pilih Kota..</option>';
-                for (var x = 0; x < data.length; x++) {
-                    options += '<option value="' + data[x]['kode_kabupaten'] + '">' + data[x]['kabupaten'] + '</option>';    
-                }
-                $('select#kabkota').select2();
-                $('select#kabkota').html(options);
-                $("#kabkota").trigger("chosen:updated");
-            },
-            complete: function() {
-                $('.loader').hide();
-            }
-        });
-    });
-    //$('select#kecamatan').html("<option value=''>Pilih Kecamatan..</option>"); 
-    //$('select#kecamatan').select2();
-    $('select#kabkota').on('change', function (){
-        $('select#kecamatan').html("<option value=''>Pilih Kecamatan..</option>");// add this on each call then add the options when data receives from the request
+        //$('.loader').hide();
+        /*provinsi.select2(); 
+        //$('select#kabkota').html("<option value=''>Pilih Kota..</option>"); 
+        //$('select#kabkota').select2();
         
-        $.ajax({
-            url: '/getKecamatan/'+$(this).val(),
-            dataType: "json",
-            beforeSend: function() {
-                $('.loader').show();
-            },
-            success: function(data) {
-                $('select#kecamatan').empty(); 
-            
-                var options = '<option value="0">Pilih Kecamatan..</option>';
-                for (var x = 0; x < data.length; x++) {
-                    //console.log($('#jenis_usulan').val());
-                    if ($('#jenis_usulan').val() == 2 || $('#jenis_usulan').val() == 3) {
-                        if (data[x]['lokpri'] == 1) {
-                            options += '<option value="' + data[x]['kode_kecamatan'] + '">' + data[x]['kecamatan'] + '</option>';        
-                        }
-                    }else{
-                        options += '<option value="' + data[x]['kode_kecamatan'] + '">' + data[x]['kecamatan'] + '</option>';
+        $('select#provinsi').on('change', function (){
+            $('select#kabkota').html("<option value=''>Pilih Kota..</option>");// add this on each call then add the options when data receives from the request
+            $.ajax({
+                url: '/getKabKota/'+$(this).val(),
+                dataType: "json",
+                beforeSend: function() {
+                    $('.loader').show();
+                },
+                success: function(data) {
+                    $('select#kabkota').empty(); 
+                
+                    var options = '<option value="0">Pilih Kota..</option>';
+                    for (var x = 0; x < data.length; x++) {
+                        options += '<option value="' + data[x]['kode_kabupaten'] + '">' + data[x]['kabupaten'] + '</option>';    
                     }
+                    $('select#kabkota').select2();
+                    $('select#kabkota').html(options);
+                    $("#kabkota").trigger("chosen:updated");
+                },
+                complete: function() {
+                    $('.loader').hide();
                 }
-                $('select#kecamatan').select2();
-                $('select#kecamatan').html(options);
-            },
-            complete: function() {
-                $('.loader').hide();
-            }
+            });
         });
-    });*/
-
-    //Load data Kecamatan
-    $.ajax({
-        url: '/getKecamatan',
-        dataType: "json",
-        beforeSend: function() {
-            $('.loader').show();
-            $("#loader-wrapper").show();
-        },
-        success: function(data) {
-            kecamatan.empty(); 
-            var options = '<option value="0">Pilih Kecamatan..</option>';
-            for (var x = 0; x < data.length; x++) {
-                var selected = (data[x]['kode_kec'] == $('#kode_kec').val()) ? "selected":"";
-                options += '<option value="' + data[x]['kode_kec'] + '"'+ selected +'>' + data[x]['nama_kecamatan'] + '</option>';
-            }
-            kecamatan.html(options);
+        //$('select#kecamatan').html("<option value=''>Pilih Kecamatan..</option>"); 
+        //$('select#kecamatan').select2();
+        $('select#kabkota').on('change', function (){
+            $('select#kecamatan').html("<option value=''>Pilih Kecamatan..</option>");// add this on each call then add the options when data receives from the request
             
-        },
-        complete: function() {
-            $('.loader').hide();
-            $("#loader-wrapper").hide();
-        }
-    });
-    kecamatan.select2();
+            $.ajax({
+                url: '/getKecamatan/'+$(this).val(),
+                dataType: "json",
+                beforeSend: function() {
+                    $('.loader').show();
+                },
+                success: function(data) {
+                    $('select#kecamatan').empty(); 
+                
+                    var options = '<option value="0">Pilih Kecamatan..</option>';
+                    for (var x = 0; x < data.length; x++) {
+                        //console.log($('#jenis_usulan').val());
+                        if ($('#jenis_usulan').val() == 2 || $('#jenis_usulan').val() == 3) {
+                            if (data[x]['lokpri'] == 1) {
+                                options += '<option value="' + data[x]['kode_kecamatan'] + '">' + data[x]['kecamatan'] + '</option>';        
+                            }
+                        }else{
+                            options += '<option value="' + data[x]['kode_kecamatan'] + '">' + data[x]['kecamatan'] + '</option>';
+                        }
+                    }
+                    $('select#kecamatan').select2();
+                    $('select#kecamatan').html(options);
+                },
+                complete: function() {
+                    $('.loader').hide();
+                }
+            });
+        });*/
 
-    //$('select#desa').html("<option value=''>Pilih Desa..</option>");
-    //$('select#desa').select2();
-    kecamatan.on('change', function (){
-        $('select#desa').html("<option value=''>Pilih Desa..</option>");// add this on each call then add the options when data receives from the request
-        
+        //Load data Kecamatan
         $.ajax({
-            url: '/getDesa/'+$(this).val(),
+            url: '/getKecamatan',
             dataType: "json",
             beforeSend: function() {
                 $('.loader').show();
                 $("#loader-wrapper").show();
             },
             success: function(data) {
-                $('select#desa').empty(); 
-            
-                var options = '<option value="0">Pilih Desa..</option>';
+                kecamatan.empty(); 
+                var options = '<option value="0">Pilih Kecamatan..</option>';
                 for (var x = 0; x < data.length; x++) {
-                   options += '<option value="' + data[x]['kode_kel'] + '">' + data[x]['nama_kelurahan'] + '</option>';
+                    var selected = (data[x]['kode_kec'] == $('#kode_kec').val()) ? "selected":"";
+                    options += '<option value="' + data[x]['kode_kec'] + '"'+ selected +'>' + data[x]['nama_kecamatan'] + '</option>';
                 }
-                $('select#desa').select2();
-                $('select#desa').html(options);
+                kecamatan.html(options);
+                
             },
             complete: function() {
                 $('.loader').hide();
                 $("#loader-wrapper").hide();
             }
         });
-    });
+        kecamatan.select2();
+
+        //$('select#desa').html("<option value=''>Pilih Desa..</option>");
+        //$('select#desa').select2();
+        kecamatan.on('change', function (){
+            $('select#desa').html("<option value=''>Pilih Desa..</option>");// add this on each call then add the options when data receives from the request
+            
+            $.ajax({
+                url: '/getDesa/'+$(this).val(),
+                dataType: "json",
+                beforeSend: function() {
+                    $('.loader').show();
+                    $("#loader-wrapper").show();
+                },
+                success: function(data) {
+                    $('select#desa').empty(); 
+                
+                    var options = '<option value="0">Pilih Desa..</option>';
+                    for (var x = 0; x < data.length; x++) {
+                    options += '<option value="' + data[x]['kode_kel'] + '">' + data[x]['nama_kelurahan'] + '</option>';
+                    }
+                    $('select#desa').select2();
+                    $('select#desa').html(options);
+                },
+                complete: function() {
+                    $('.loader').hide();
+                    $("#loader-wrapper").hide();
+                }
+            });
+        });
         if ($('#kode_kec').val() !== null) {
             $.ajax({
                 url: '/getDesa/'+$('#kode_kec').val(),

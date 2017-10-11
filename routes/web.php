@@ -39,7 +39,11 @@ Route::group(['prefix'=>'kuesioner'], function(){
 	Route::get('/bangunankotaciawi/getdata','BangunanCtrl@getDataBangunanKotaCiawi');
 	
 	Route::get('/bangunan/tambah','BangunanCtrl@getTambah');
+	Route::get('/bangunan/{id}/ubah','BangunanCtrl@getEdit');
+	Route::delete('/bangunan/{id}/hapus','BangunanCtrl@postDelete');
+	Route::post('/bangunan/post','BangunanCtrl@postBangunan');
 	Route::post('/bangunan/upload','BangunanCtrl@postUpload');
+
 	Route::get('/tanah','TanahCtrl@getIndex');
 	Route::get('/tanah/tambah','TanahCtrl@getTambah');
 	Route::post('/tanah/post','TanahCtrl@postTanah');
@@ -67,7 +71,7 @@ Route::group(array('prefix'=>'layers'), function(){
 	Route::get('/tambah','LayerCtrl@getTambah');
 	Route::post('/addedit','LayerCtrl@postTambah');
 	Route::get('/{id}/ubah','LayerCtrl@getUbah');
-	Route::get('/{id}/hapus','LayerCtrl@getHapus');
+	Route::delete('/{id}/hapus','LayerCtrl@getHapus');
 	Route::get('/getdata','LayerCtrl@getData');
 	Route::get('/custom','LayerCtrl@custom');
 	Route::get('/layerinfo/{id}','LayerCtrl@getLayerinfo');

@@ -4,12 +4,12 @@
 @endsection
 @section('title','Layer')
 @section('content')
-    <div class="box box-primary">
+    <div class="box box-primary box-layer">
         <div class="box-header with-border">
             <h3 class="box-title">Data Layer</h3>
             <div class="box-tools">
             <div class="btn-group">
-                <a href="#" class="btn bg-orange cari_category btn-flat btn-sm"><span class="fa fa-search"></span> Filter</a>
+                <a href="#" class="btn bg-orange btn-flat btn-sm"><span class="fa fa-search"></span> Filter</a>
                 <?php if(\Gate::check('create.global')){ ?>
                     <a href="{{ url('layers/tambah') }}" class="btn btn-primary btn-flat btn-sm"><span class="fa fa-plus"></span> Tambah</a>
                 <?php } ?>

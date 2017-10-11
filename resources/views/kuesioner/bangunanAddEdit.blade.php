@@ -145,7 +145,10 @@ if(session('aksi') == 'edit'){
 					</div>
 					<div class="form-group">
 						<label>Provinsi</label>
-						<input  class="form-control" name="kode_prov" type="text" value="{{ $kode_prov }}">
+						
+						<select name="kode_prov" id="provinsi" class="form-control">
+							<option value="0">----</option>
+						</select>
 						<div class="col-md-6"></div>
 					</div>
 					<div class="form-group">

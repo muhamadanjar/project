@@ -21,16 +21,17 @@ function response_layersRequest(response){
     //console.log(response);
     var jsonstr_ = [];
     if (response.hasOwnProperty("fields")) {
-        console.log('fields');
+        //console.log('fields');
         $.ajax({
             url: $('#layerurl').val(),
             type: "get",
             dataType:"json",
+            headers: {'X-CSRF-TOKEN': Laravel.csrfToken },
             crossDomain:true,
             xhrFields: {
                 withCredentials: true
             },
-            data: {'f':'json', '_token': $('input[name=_token]').val()},
+            data: {'f':'json', /*'_token': $('input[name=_token]').val()*/},
             success: function(data){
                 //data = data.sort(function(b,a) { return a.id > b.id });
                 //console.log(data);
@@ -42,6 +43,13 @@ function response_layersRequest(response){
             },
             error:function(e){
                 console.log(e)
+            },
+            beforeSend: function (xhr, type) {
+                // Set the CSRF Token in the header for security
+                if (type.type !== "GET") {
+                    var token = Cookies.get("XSRF-TOKEN");
+                    xhr.setRequestHeader('X-XSRF-Token', token);
+                }
             }
         });
     }else{
@@ -65,7 +73,7 @@ function response_layersRequest(response){
         for (var i in sublayer_) {
             id_ = sublayer_[i].id;
             newurl = url+'/'+id_;
-            console.log(newurl);
+            //console.log(newurl);
             $.ajax({
                 url: newurl,
                 type: "get",
