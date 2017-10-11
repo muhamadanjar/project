@@ -153,17 +153,25 @@ if(session('aksi') == 'edit'){
 					</div>
 					<div class="form-group">
 						<label>Kabupaten</label>
-						<input  class="form-control" name="kode_kab" type="text" value="{{ $kode_kab }}">
+						
+						<select name="kode_kab" id="kabkota" class="form-control">
+							<option value="0">----</option>
+						</select>
 						<div class="col-md-6"></div>
 					</div>
 					<div class="form-group">
 						<label>Kecamatan</label>
-						<input  class="form-control" name="kode_kec" type="text" value="{{ $kode_kec }}">
+						<select name="kode_kec" id="kecamatan" class="form-control">
+							<option value="0">----</option>
+						</select>
 						<div class="col-md-6"></div>
 					</div>
 					<div class="form-group">
 						<label>Nagari</label>
-						<input  class="form-control" name="kode_kel" type="text" value="{{ $kode_kel }}">
+						
+						<select name="kode_kel" id="desa" class="form-control">
+							<option value="0">----</option>
+						</select>
 						<div class="col-md-6"></div>
 					</div>
 

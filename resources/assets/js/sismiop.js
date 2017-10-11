@@ -103,7 +103,7 @@ function base64image(resFile) {
     }
 }
 
-function loaddatawilayah(url){
+function loaddatawilayah(url,data=''){
     console.log('Load adata')
     return $.ajax({
         url: url,
@@ -112,9 +112,6 @@ function loaddatawilayah(url){
             $('.loader').show();
             $("#loader-wrapper").show();
         },
-        success:function(data){
-            return data;
-        }
     });
     
 }
@@ -536,147 +533,60 @@ function loaddatawilayah(url){
     var kabkota = $('select#kabkota');
     var kecamatan = $('select#kecamatan');
     var desa = $('select#desa');
-    xhr_get('/api/getprovinsi');
     
-        //$('.loader').hide();
-        /*provinsi.select2(); 
-        //$('select#kabkota').html("<option value=''>Pilih Kota..</option>"); 
-        //$('select#kabkota').select2();
-        
-        $('select#provinsi').on('change', function (){
-            $('select#kabkota').html("<option value=''>Pilih Kota..</option>");// add this on each call then add the options when data receives from the request
-            $.ajax({
-                url: '/getKabKota/'+$(this).val(),
-                dataType: "json",
-                beforeSend: function() {
-                    $('.loader').show();
-                },
-                success: function(data) {
-                    $('select#kabkota').empty(); 
-                
-                    var options = '<option value="0">Pilih Kota..</option>';
-                    for (var x = 0; x < data.length; x++) {
-                        options += '<option value="' + data[x]['kode_kabupaten'] + '">' + data[x]['kabupaten'] + '</option>';    
-                    }
-                    $('select#kabkota').select2();
-                    $('select#kabkota').html(options);
-                    $("#kabkota").trigger("chosen:updated");
-                },
-                complete: function() {
-                    $('.loader').hide();
-                }
-            });
-        });
-        //$('select#kecamatan').html("<option value=''>Pilih Kecamatan..</option>"); 
-        //$('select#kecamatan').select2();
-        $('select#kabkota').on('change', function (){
-            $('select#kecamatan').html("<option value=''>Pilih Kecamatan..</option>");// add this on each call then add the options when data receives from the request
-            
-            $.ajax({
-                url: '/getKecamatan/'+$(this).val(),
-                dataType: "json",
-                beforeSend: function() {
-                    $('.loader').show();
-                },
-                success: function(data) {
-                    $('select#kecamatan').empty(); 
-                
-                    var options = '<option value="0">Pilih Kecamatan..</option>';
-                    for (var x = 0; x < data.length; x++) {
-                        //console.log($('#jenis_usulan').val());
-                        if ($('#jenis_usulan').val() == 2 || $('#jenis_usulan').val() == 3) {
-                            if (data[x]['lokpri'] == 1) {
-                                options += '<option value="' + data[x]['kode_kecamatan'] + '">' + data[x]['kecamatan'] + '</option>';        
-                            }
-                        }else{
-                            options += '<option value="' + data[x]['kode_kecamatan'] + '">' + data[x]['kecamatan'] + '</option>';
-                        }
-                    }
-                    $('select#kecamatan').select2();
-                    $('select#kecamatan').html(options);
-                },
-                complete: function() {
-                    $('.loader').hide();
-                }
-            });
-        });*/
+    loaddatawilayah('/api/getprovinsi').then(function(data){
+        var options = '<option value="0">Pilih Provinsi..</option>';
+        for (var x = 0; x < data.length; x++) {
+            var selected = (data[x]['kode_prov'] == $('#kode_prov').val()) ? "selected":"";
+            options += '<option value="' + data[x]['kode_prov'] + '"'+ selected +'>' + data[x]['nama_provinsi'] + '</option>';
+        }
+        provinsi.html(options);
+        $("#loader-wrapper").hide();
+    });
 
-        //Load data Kecamatan
-        $.ajax({
-            url: '/getKecamatan',
-            dataType: "json",
-            beforeSend: function() {
-                $('.loader').show();
-                $("#loader-wrapper").show();
-            },
-            success: function(data) {
-                kecamatan.empty(); 
-                var options = '<option value="0">Pilih Kecamatan..</option>';
-                for (var x = 0; x < data.length; x++) {
-                    var selected = (data[x]['kode_kec'] == $('#kode_kec').val()) ? "selected":"";
-                    options += '<option value="' + data[x]['kode_kec'] + '"'+ selected +'>' + data[x]['nama_kecamatan'] + '</option>';
-                }
-                kecamatan.html(options);
-                
-            },
-            complete: function() {
-                $('.loader').hide();
-                $("#loader-wrapper").hide();
+    provinsi.on('change', function (){
+        kabkota.html("<option value=''>Pilih Kota..</option>");
+        loaddatawilayah('/api/getkabupaten/'+$(this).val()).then(function(data){
+            var options = '<option value="0">Pilih Kota..</option>';
+            for (var x = 0; x < data.length; x++) {
+                options += '<option value="' + data[x]['kode_kab'] + '">' + data[x]['nama_kabupaten'] + '</option>';    
             }
+            kabkota.select2();
+            kabkota.html(options);
+            $("#loader-wrapper").hide();
         });
-        kecamatan.select2();
-
-        //$('select#desa').html("<option value=''>Pilih Desa..</option>");
-        //$('select#desa').select2();
-        kecamatan.on('change', function (){
-            $('select#desa').html("<option value=''>Pilih Desa..</option>");// add this on each call then add the options when data receives from the request
-            
-            $.ajax({
-                url: '/getDesa/'+$(this).val(),
-                dataType: "json",
-                beforeSend: function() {
-                    $('.loader').show();
-                    $("#loader-wrapper").show();
-                },
-                success: function(data) {
-                    $('select#desa').empty(); 
-                
-                    var options = '<option value="0">Pilih Desa..</option>';
-                    for (var x = 0; x < data.length; x++) {
-                    options += '<option value="' + data[x]['kode_kel'] + '">' + data[x]['nama_kelurahan'] + '</option>';
-                    }
-                    $('select#desa').select2();
-                    $('select#desa').html(options);
-                },
-                complete: function() {
-                    $('.loader').hide();
-                    $("#loader-wrapper").hide();
-                }
-            });
+        
+        
+    });
+    kabkota.on('change', function (){
+        kecamatan.html("<option value=''>Pilih Kota..</option>");
+        loaddatawilayah('/api/getkecamatan/'+$(this).val()).then(function(data){
+            var options = '<option value="0">Pilih Kecamatan..</option>';
+            for (var x = 0; x < data.length; x++) {
+                options += '<option value="' + data[x]['kode_kec'] + '">' + data[x]['nama_kecamatan'] + '</option>';    
+            }
+            kecamatan.select2();
+            kecamatan.html(options);
+            $("#loader-wrapper").hide();
         });
-        if ($('#kode_kec').val() !== null) {
-            $.ajax({
-                url: '/getDesa/'+$('#kode_kec').val(),
-                dataType: "json",
-                beforeSend: function() {
-                    $('.loader').show();
-                },
-                success: function(data) {
-                    $('select#desa').empty(); 
-                
-                    var options = '<option value="0">Pilih Desa..</option>';
-                    for (var x = 0; x < data.length; x++) {
-                        var selected = (data[x]['kode_kel'] == $('#kode_kel').val()) ? "selected":"";
-                        options += '<option value="' + data[x]['kode_kel'] + '" '+selected+'>' + data[x]['nama_kelurahan'] + '</option>';
-                    }
-                    $('select#desa').select2();
-                    $('select#desa').html(options);
-                },
-                complete: function() {
-                    $('.loader').hide();
-                }
-            });
-        } 
+        
+        
+    });
+    kecamatan.on('change', function (){
+        desa.html("<option value=''>Pilih Desa/Kelurahan..</option>");
+        loaddatawilayah('/api/getdesa/'+$(this).val()).then(function(data){
+            var options = '<option value="0">Pilih Desa..</option>';
+            for (var x = 0; x < data.length; x++) {
+                options += '<option value="' + data[x]['kode_kel'] + '">' + data[x]['nama_kelurahan'] + '</option>';    
+            }
+            desa.select2();
+            desa.html(options);
+            $("#loader-wrapper").hide();
+        });
+        
+        
+    });
+    
 
     $('#checkmap').click(function(){
         if (navigator.geolocation) {
