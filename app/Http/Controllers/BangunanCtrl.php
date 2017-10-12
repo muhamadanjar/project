@@ -13,6 +13,7 @@ class BangunanCtrl extends Controller{
         $this->middleware('auth');
     }
     public function getIndex(){
+        session(['aksi'=> null]);
         return view('kuesioner.bangunanIndex');
     }
     public function getData(){
@@ -43,20 +44,82 @@ class BangunanCtrl extends Controller{
     public function postBangunan(Request $request){
         \DB::beginTransaction();
         try{
-            $bangunan = new Bangunan();
+            $query = (session('aksi') == 'edit') ? Bangunan::find($request->id) : new Bangunan;
+            $bangunan = $query;
             $bangunan->no_responden = $request->no_responden;
+            $bangunan->kode_prov = $request->kode_prov;
+            $bangunan->kode_kab = $request->kode_kab;
+            $bangunan->kode_kec = $request->kode_kec;
+            $bangunan->kode_kel = $request->kode_kel;
             $bangunan->jorong = $request->jorong;
+
+            $bangunan->nama = $request->nama;
+            $bangunan->alamat = $request->alamat;
+            $bangunan->jenis_kelamin = $request->jenis_kelamin;
+            $bangunan->usia = $request->usia;
+            $bangunan->pendidikanterakhir = $request->pendidikanterakhir;
+            $bangunan->statusrumahtangga = $request->statusrumahtangga;
+            $bangunan->lamatinggal = $request->lamatinggal;
+            $bangunan->jumlahorang = $request->jumlahorang;
+            $bangunan->jumlahkk = $request->jumlahkk;
+            $bangunan->statuskependudukan = $request->statuskependudukan;
+            $bangunan->kepemilikanktp = $request->kepemilikanktp;
+            $bangunan->kepemilikankk = $request->kepemilikankk;
+            $bangunan->statuskepemilikantanah = $request->statuskepemilikantanah;
+            $bangunan->statuskepemilikanrumah = $request->statuskepemilikanrumah;
+            $bangunan->namapemilik = $request->namapemilik;
+            $bangunan->alamatpemilik = $request->alamatpemilik;
+            $bangunan->hargasewaperbulan = $request->hargasewaperbulan;
+            $bangunan->jeniskontruksi = $request->jeniskontruksi;
+            $bangunan->strukpbb = $request->strukpbb;
+            $bangunan->luasbumi = $request->luasbumi;
+            $bangunan->luasbangunan = $request->luasbangunan;
+            $bangunan->kepemilikansuratimb = $request->kepemilikansuratimb;
+            $bangunan->pemanfaatanbangunan = $request->pemanfaatanbangunan;
+            $bangunan->sumberpenerangan = $request->sumberpenerangan;
+            $bangunan->sambungantelpkabel = $request->sambungantelpkabel;
+            $bangunan->jenispagarrumah = $request->jenispagarrumah;
+            $bangunan->panjangpagar = $request->panjangpagar;
+            $bangunan->kepemilikansumurmataair = $request->kepemilikansumurmataair;
+            $bangunan->kepemilikanrumahlain = $request->kepemilikanrumahlain;
+            $bangunan->kepemilikantanahlain = $request->kepemilikantanahlain;
+            $bangunan->lokasitanahditempatlain = $request->lokasitanahditempatlain;
+            $bangunan->pekerjaanutama = $request->pekerjaanutama;
+            $bangunan->pekerjaansampingan = $request->pekerjaansampingan;
+            $bangunan->totalpendapatanperbulan = $request->totalpendapatanperbulan;
+            $bangunan->totalpengeluaranperbulan = $request->totalpengeluaranperbulan;
+            $bangunan->pengetahuanrespondenirigasi = $request->pengetahuanrespondenirigasi;
+        
+            $bangunan->sumberinformasi = $request->sumberinformasi;
+            $bangunan->kesediandirekolasi = $request->kesediandirekolasi;
+            $bangunan->alasanpenolakanrelokasi = $request->alasanpenolakanrelokasi;
+            $bangunan->bentukpergantiandisukai = $request->bentukpergantiandisukai;
+            $bangunan->pendapatrespondenpemindahankolektif = $request->pendapatrespondenpemindahankolektif;
+
             $bangunan->foto = $request->foto;
+            $bangunan->x = $request->latitude;
+            $bangunan->y = $request->longitude;
             $bangunan->save();
             
             DB::commit();
             echo "Tanah Saved";
-            
+            session(['aksi'=> null]);
         } catch(Exception $e){
             \DB::rollback();
         }
         return redirect('kuesioner/bangunan/tambah');
         
+    }
+
+    public function postDelete($id){
+        $bangunan = Bangunan::find($id);
+        $bangunan->delete();
+
+        return redirect('/kuesioner/bangunan');
+    }
+    public function getLihat($id)
+    {
+        # code...
     }
 
     public function postUpload(){

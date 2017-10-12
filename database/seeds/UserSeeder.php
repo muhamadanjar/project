@@ -59,6 +59,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin Aja',
             'password' => bcrypt('password'),
             'isactived' => 1,
+            
         ]);
     
         $user->assignRole('admin');

@@ -56,6 +56,41 @@ if(session('aksi') == 'edit'){
 						</div>
 
 						<div class="form-group">
+						<label>Provinsi</label>
+						
+							<input type="hidden" id="kode_prov" value="{{ $kode_prov }}">
+							
+							<select name="kode_prov" id="provinsi" class="form-control">
+								<option value="0">----</option>
+							</select>
+							<div class="col-md-6"></div>
+						</div>
+						<div class="form-group">
+							<label>Kabupaten</label>
+							<input type="hidden" id="kode_kab" value="{{ $kode_kab }}">
+							<select name="kode_kab" id="kabkota" class="form-control">
+								<option value="0">----</option>
+							</select>
+							<div class="col-md-6"></div>
+						</div>
+						<div class="form-group">
+							<label>Kecamatan</label>
+							<input type="hidden" id="kode_kec" value="{{ $kode_kec }}">
+							<select name="kode_kec" id="kecamatan" class="form-control">
+								<option value="0">----</option>
+							</select>
+							<div class="col-md-6"></div>
+						</div>
+						<div class="form-group">
+							<label>Nagari</label>
+							<input type="hidden" id="kode_kel" value="{{ $kode_kel }}">
+							<select name="kode_kel" id="desa" class="form-control">
+								<option value="0">----</option>
+							</select>
+							<div class="col-md-6"></div>
+						</div>
+
+						<div class="form-group">
 							<label>Nama Pemilik</label>
 							<input  class="form-control" name="nama_pemilik" type="text" value="{{ $nama_pemilik }}">
 							<div class="col-md-6">
@@ -118,46 +153,50 @@ if(session('aksi') == 'edit'){
 		</div>
 		<div class="col-md-4">
 			<div class="box box-default">
-					<div class="box-header with-border">
-						<h6 class="box-title"><i class="fa fa-image"></i> Foto</h6>
-					</div>
-					<div class="box-body">
+				<div class="box-header with-border">
+					<h6 class="box-title"><i class="fa fa-image"></i> Foto</h6>
+				</div>
+				<div class="box-body">
 						<div class="row">
-							<div class="col-xs-6">
-								<?php 
-								if (file_exists(public_path('assets/foto/bangunan').'/'.$foto)) {
-								?>
-								<img src="{{ asset('/assets/foto/')}}/{{ $foto }}" alt="{{$no_responden}}" class="img-responsive" width="80%">
-								<?php  
-								}else{
-								?>
-								<img src="http://placehold.it/180" alt="{{$no_responden}}" class="img-responsive" width="80%">
-								<?php  
-								}
-								?>
-							</div>
-							<div class="input-group margin">
-								<input type="text" class="form-control bangunan_foto" readonly="readonly" name="foto" value="{{ $foto }}">
-								<span class="input-group-btn">
-									<input type="file" name="bangunan_file" class="hidden bangunan_file fileupload">
-									<button type="button" class="btn btn-info btn-flat formUpload">Tanah!</button>
-								</span>
-							</div>
-							<div class="col-xs-6">
-								<div class="form-group">
-									<label>X</label>
-									<input  class="form-control" name="x" type="text" value="{{ $x }}">
-									
+							<div class="col-md-12">
+								<div class="foto">
+									<?php 
+									if (file_exists(public_path('assets/foto/bangunan').'/'.$foto)) {
+									?>
+										<img src="{{ asset('/assets/foto/')}}/{{ $foto }}" alt="{{$no_responden}}" class="img-responsive _foto" width="80%">
+										<?php  
+									}else{
+										?>
+										<img src="http://placehold.it/180" alt="{{$no_responden}}" class="img-responsive _foto" width="80%">
+									<?php  
+									}
+									?>
 								</div>
-								<div class="form-group">
-									<label>Y</label>
-									<input  class="form-control" name="y" type="text" value="{{ $y }}">
-									
+								<div class="input-group margin controlupload">
+									<input type="text" class="form-control bangunan_foto" readonly="readonly" name="foto" value="{{ $foto }}">
+									<span class="input-group-btn">
+											<input type="file" name="bangunan_file" class="hidden bangunan_file fileupload">
+											<button type="button" class="btn btn-info btn-flat formUpload">Bangunan!</button>
+									</span>
 								</div>
 							</div>
 						</div>
-						
-					</div>
+						<div class="row">
+							<div class="col-md-12">
+									<div class="form-group">
+										<label>X</label>
+										<input  class="form-control" name="latitude" type="text" value="{{ $x }}">
+									</div>
+									<div class="form-group">
+										<label>Y</label>
+										<input  class="form-control" name="longitude" type="text" value="{{ $y }}">
+									</div>
+									<div class="form-group">
+										<button type="button" id="checkmap" class="btn btn-primary btn-flat">Lokasi</button>
+										<button type="button" id="checkin" class="btn btn-primary btn-flat">Check In</button>
+									</div>
+							</div>
+						</div>
 				</div>
 			</div>
 		</div>

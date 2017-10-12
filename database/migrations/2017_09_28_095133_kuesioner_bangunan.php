@@ -70,8 +70,8 @@ class KuesionerBangunan extends Migration
             $table->string('alasanpenolakanrelokasi')->nullable();
             $table->string('bentukpergantiandisukai')->nullable();
             $table->string('pendapatrespondenpemindahankolektif')->nullable();
-            $table->decimal('x',8,5)->nullable();
-            $table->decimal('y',8,5)->nullable();
+            $table->double('x',8,5)->nullable();
+            $table->double('y',8,5)->nullable();
             $table->string('foto')->nullable();
             $table->timestamps();
             
