@@ -107,19 +107,25 @@ class BangunanCtrl extends Controller{
         } catch(Exception $e){
             \DB::rollback();
         }
-        return redirect('kuesioner/bangunan/tambah');
+        return redirect('kuesioner/bangunan');
         
     }
-
+    public function postMap(Request $r){
+        $bangunan = Bangunan::find($r->id);
+        $bangunan->x = $r->x;
+        $bangunan->y = $r->y;
+        $bangunan->save();
+        return json_encode($r);
+    }
     public function postDelete($id){
         $bangunan = Bangunan::find($id);
         $bangunan->delete();
 
         return redirect('/kuesioner/bangunan');
     }
-    public function getLihat($id)
-    {
-        # code...
+    public function getPeta($id){
+        $bangunan = Bangunan::find($id);
+        return view('kuesioner.bangunanMap')->with('bangunan',$bangunan);
     }
 
     public function postUpload(){

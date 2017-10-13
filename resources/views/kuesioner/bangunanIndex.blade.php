@@ -6,7 +6,7 @@
 @section('content')
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Data Bangunan</h3>
+            <h3 class="box-title"><i class="fa fa-building"></i>Data Bangunan</h3>
             <div class="box-tools">
             <div class="btn-group">
             <a href="#" class="btn bg-orange cari_category btn-flat btn-sm"><span class="fa fa-search"></span> Filter</a>

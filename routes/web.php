@@ -37,12 +37,13 @@ Route::group(['prefix'=>'kuesioner'], function(){
 	Route::get('/bangunan','BangunanCtrl@getIndex');
 	Route::get('/bangunan/getdata','BangunanCtrl@getData');
 	Route::get('/bangunankotaciawi/getdata','BangunanCtrl@getDataBangunanKotaCiawi');
-	
 	Route::get('/bangunan/tambah','BangunanCtrl@getTambah');
 	Route::get('/bangunan/{id}/ubah','BangunanCtrl@getEdit');
 	Route::delete('/bangunan/{id}/hapus','BangunanCtrl@postDelete');
 	Route::post('/bangunan/post','BangunanCtrl@postBangunan');
 	Route::post('/bangunan/upload','BangunanCtrl@postUpload');
+	Route::get('/bangunan/{id}/peta','BangunanCtrl@getPeta');
+	Route::post('/bangunan/{id}/mappost','BangunanCtrl@postMap');
 
 	Route::get('/tanah','TanahCtrl@getIndex');
 	Route::get('/tanah/tambah','TanahCtrl@getTambah');

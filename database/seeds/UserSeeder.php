@@ -28,6 +28,18 @@ class UserSeeder extends Seeder
             ['name' => 'edit.dokumen'],
             ['name' => 'delete.dokumen'],
 
+            ['name' => 'create.tanah'],
+            ['name' => 'edit.tanah'],
+            ['name' => 'delete.tanah'],
+
+            ['name' => 'create.bangunan'],
+            ['name' => 'edit.bangunan'],
+            ['name' => 'delete.bangunan'],
+
+            ['name' => 'create.global'],
+            ['name' => 'edit.global'],
+            ['name' => 'delete.global'],
+
         ]);
     
         // Add a permission to a role
@@ -59,7 +71,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin Aja',
             'password' => bcrypt('password'),
             'isactived' => 1,
-            
+            'foto' => 'logo_admin.png'
         ]);
     
         $user->assignRole('admin');

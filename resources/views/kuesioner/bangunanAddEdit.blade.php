@@ -126,9 +126,15 @@ if(session('aksi') == 'edit'){
 		<div class="col-md-8">
 			<div class="box box-default">
 				<div class="box-header with-border">
-					<h6 class="box-title"><i class="fa fa-user"></i> Tambah Bangunan</h6>
-					<a href="{{ url('kuesioner/bangunan') }}" class="pull-right btn btn-sm btn-primary">
+					<h6 class="box-title"><i class="fa fa-building"></i> Tambah Bangunan</h6>
+					
+					<div class="btn-group pull-right">
+						<button type="submit" class="btn btn-sm btn-primary">
+							<i class="fa fa-send"></i> Simpan
+						</button>
+						<a href="{{ url('kuesioner/bangunan') }}" class=" btn btn-sm btn-primary">
 						<i class="fa fa-mail-reply"></i> Kembali</a>
+					</div>
 				</div>
 				<div class="box-body">
 					
@@ -140,20 +146,20 @@ if(session('aksi') == 'edit'){
 						
 					<div class="form-group">
 						<label>No Responden</label>
-						<input type="text" class="form-control" name="no_responden" value="{{ $no_responden }}" {{ $readonly }}>
+						<input type="text" class="form-control numberonly" name="no_responden" value="{{ $no_responden }}" {{ $readonly }}>
 						<div class="col-md-6"></div>
 					</div>
 					
-					<div class="box box-widget collapsed-box informasi-proyek">
+					<div class="box box-widget profil-responden">
 						<div class="box-header with-border">
 							<div class="user-block">
 								<img class="img-circle" src="http://placehold.it/128" alt="User Image">
-								<span class="username"><a href="#">Profil Responden</a></span>
+								<span class="username"><a href="#" data-widget="collapse">Profil Responden</a></span>
 								<!--<span class="description">Shared publicly - 7:30 PM Today</span>-->
 							</div>
 							
 							<div class="box-tools">
-								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 								</button>
 								
 							</div>
@@ -458,7 +464,7 @@ if(session('aksi') == 'edit'){
 
 							<div class="form-group">
 								<label>Luas Bumi</label>
-								<input  class="form-control" name="luasbumi" type="text" placeholder="Luas Bumi" value="{{ $luasbumi }}">
+								<input  class="form-control numeralsOnly" name="luasbumi" type="text" placeholder="Luas Bumi" value="{{ $luasbumi }}">
 								
 								<div class="col-md-6">
 
@@ -466,7 +472,7 @@ if(session('aksi') == 'edit'){
 							</div>
 							<div class="form-group">
 								<label>Luas Bangunan</label>
-								<input  class="form-control" name="luasbangunan" type="text" placeholder="Luas Bangunan" value="{{ $luasbangunan }}">
+								<input  class="form-control numberonly" name="luasbangunan" type="text" placeholder="Luas Bangunan" value="{{ $luasbangunan }}">
 								<div class="col-md-6">
 
 								</div>
@@ -608,7 +614,6 @@ if(session('aksi') == 'edit'){
 
 							<div class="form-group">
 								<label>Lokasi Tanah di tempat lain</label>
-								<input  class="form-control" name="lokasitanahditempatlain" type="text" value="{{ $lokasitanahditempatlain }}">
 								<select class="form-control" name="lokasitanahditempatlain">
 									<option value="0">-----</option>
 									<option @if($lokasitanahditempatlain == 'Di desa yang sama') selected @endif value="Di desa yang sama">Di desa yang sama</option>
@@ -645,23 +650,32 @@ if(session('aksi') == 'edit'){
 						<div class="box-body">
 							<div class="form-group">
 								<label>Pekerjaan Utama</label>
-								<input  class="form-control" name="pekerjaanutama" type="text" value="{{ $pekerjaanutama }}">
+								<select class="form-control" name="pekerjaanutama">
+									<option value="0">-----</option>
+									<option @if($pekerjaanutama == 'PNS') selected @endif value="PNS">PNS</option>
+									<option @if($pekerjaanutama == 'TNI / polisi') selected @endif value="TNI / polisi">TNI / polisi</option>
+									<option @if($pekerjaanutama == 'Ibu rumah tangga') selected @endif value="Ibu rumah tangga">Ibu rumah tangga</option>
+									<option @if($pekerjaanutama == 'Pegawai swasta') selected @endif value="Pegawai swasta">Pegawai swasta</option>
+									<option @if($pekerjaanutama == 'Petani / peternak') selected @endif value="Petani / peternak">Petani / peternak</option>
+									<option @if($pekerjaanutama == 'Wiraswasta / pedagang') selected @endif value="Wiraswasta / pedagang">Wiraswasta / pedagang</option>
+									<option @if($pekerjaanutama == 'Buruh') selected @endif value="Buruh">Buruh</option>
+									<option @if($pekerjaanutama == 'Pengemudi') selected @endif value="Pengemudi">Pengemudi</option>
+									
+								</select>
 								<div class="col-md-6">
 
 								</div>
+							
 							</div>
 
 							<div class="form-group">
 								<label>Pekerjaan Sampingan</label>
-								<input  class="form-control" name="pekerjaansampingan" type="text" value="{{ $pekerjaansampingan }}">
-								<div class="col-md-6">
-
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label>Kepemilikan KTP</label>
-								<input  class="form-control" name="kepemilikanktp" type="text" value="{{ $kepemilikanktp }}">
+								<select class="form-control" name="pekerjaansampingan">
+									<option value="0">-----</option>
+									<option @if($pekerjaansampingan == 'Ada pekerjaan sampingan') selected @endif value="Ada pekerjaan sampingan">Ada pekerjaan sampingan</option>
+									<option @if($pekerjaansampingan == 'Tidak ada pekerjan sampingan') selected @endif value="Tidak ada pekerjan sampingan">Tidak ada pekerjan sampingan</option>									
+									
+								</select>
 								<div class="col-md-6">
 
 								</div>
@@ -669,7 +683,16 @@ if(session('aksi') == 'edit'){
 
 							<div class="form-group">
 								<label>Total Pendapatan Perbulan</label>
-								<input  class="form-control" name="totalpendapatanperbulan" type="text" value="{{ $totalpendapatanperbulan }}">
+								<select class="form-control" name="totalpendapatanperbulan">
+									<option value="0">-----</option>
+									
+									<option @if($totalpendapatanperbulan == '< Rp 1.800.000 per bulan') selected @endif value="< Rp 1.800.000 per bulan">< Rp 1.800.000 per bulan</option>
+									<option @if($totalpendapatanperbulan == 'Rp 1.800.000 s.d. Rp 2.700.000 per bulan') selected @endif value="Rp 1.800.000 s.d. Rp 2.700.000 per bulan">Rp 1.800.000 s.d. Rp 2.700.000 per bulan</option>
+									<option @if($totalpendapatanperbulan == '> Rp 2.700.000 s.d. Rp 3.600.000 per bulan') selected @endif value="> Rp 2.700.000 s.d. Rp 3.600.000 per bulan">> Rp 2.700.000 s.d. Rp 3.600.000 per bulan</option>
+									<option @if($totalpendapatanperbulan == '> Rp 3.600.000 s.d. Rp 4.500.000 per bula') selected @endif value="> Rp 3.600.000 s.d. Rp 4.500.000 per bulan">> Rp 3.600.000 s.d. Rp 4.500.000 per bulan</option>
+									<option @if($totalpendapatanperbulan == '> Rp 4.500.000 per bulan') selected @endif value="> Rp 4.500.000 per bulan">> Rp 4.500.000 per bulan</option>
+								</select>
+								
 								<div class="col-md-6">
 
 								</div>
@@ -677,7 +700,15 @@ if(session('aksi') == 'edit'){
 
 							<div class="form-group">
 								<label>Total Pengeluaran Perbulan</label>
-								<input  class="form-control" name="totalpengeluaranperbulan" type="text" value="{{ $totalpengeluaranperbulan }}">
+								<select class="form-control" name="totalpengeluaranperbulan">
+									<option value="0">-----</option>
+									<option @if($totalpengeluaranperbulan == '< Rp 1.800.000 per bulan') selected @endif value="< Rp 1.800.000 per bulan">< Rp 1.800.000 per bulan</option>
+									<option @if($totalpengeluaranperbulan == 'Rp 1.800.000 s.d. Rp 2.700.000 per bulan') selected @endif value="Rp 1.800.000 s.d. Rp 2.700.000 per bulan">Rp 1.800.000 s.d. Rp 2.700.000 per bulan</option>
+									<option @if($totalpengeluaranperbulan == '> Rp 2.700.000 s.d. Rp 3.600.000 per bulan') selected @endif value="> Rp 2.700.000 s.d. Rp 3.600.000 per bulan">> Rp 2.700.000 s.d. Rp 3.600.000 per bulan</option>
+									<option @if($totalpengeluaranperbulan == '> Rp 3.600.000 s.d. Rp 4.500.000 per bula') selected @endif value="> Rp 3.600.000 s.d. Rp 4.500.000 per bulan">> Rp 3.600.000 s.d. Rp 4.500.000 per bulan</option>
+									<option @if($totalpengeluaranperbulan == '> Rp 4.500.000 per bulan') selected @endif value="> Rp 4.500.000 per bulan">> Rp 4.500.000 per bulan</option>
+							
+								</select>
 								<div class="col-md-6">
 
 								</div>
@@ -690,7 +721,7 @@ if(session('aksi') == 'edit'){
 						<div class="box-header with-border">
 							<div class="user-block">
 								<img class="img-circle" src="http://placehold.it/128" alt="User Image">
-								<span class="username"><a href="#">Kondisi Ekonomi</a></span>
+								<span class="username"><a href="#">Informasi Proyek</a></span>
 								<!--<span class="description">Shared publicly - 7:30 PM Today</span>-->
 							</div>
 							
@@ -705,7 +736,12 @@ if(session('aksi') == 'edit'){
 						<div class="box-body">
 							<div class="form-group">
 								<label>Pengetahuan Responden Irigasi</label>
-								<input  class="form-control" name="pengetahuanrespondenirigasi" type="text" value="{{ $pengetahuanrespondenirigasi }}">
+								
+								<select class="form-control" name="pengetahuanrespondenirigasi">
+									<option value="0">-----</option>
+									<option @if($pekerjaanutama == 'Ya, tahu') selected @endif value="Ya, tahu">Ya, tahu</option>
+									<option @if($pekerjaanutama == 'Tidak tahu') selected @endif value="Tidak tahu">Tidak tahu</option>
+								</select>
 								<div class="col-md-6">
 
 								</div>
@@ -713,7 +749,12 @@ if(session('aksi') == 'edit'){
 
 							<div class="form-group">
 								<label>Sumber Informasi</label>
-								<input  class="form-control" name="sumberinformasi" type="text" value="{{ $sumberinformasi }}">
+								
+								<select class="form-control" name="sumberinformasi">
+									<option value="0">-----</option>
+									<option @if($sumberinformasi == 'Ya, tahu') selected @endif value="Ya, tahu">Ya, tahu</option>
+									<option @if($sumberinformasi == 'Tidak tahu') selected @endif value="Tidak tahu">Tidak tahu</option>
+								</select>
 								<div class="col-md-6">
 
 								</div>
@@ -721,7 +762,12 @@ if(session('aksi') == 'edit'){
 
 							<div class="form-group">
 								<label>Kesedian Relokasi</label>
-								<input  class="form-control" name="kesediandirekolasi" type="text" value="{{ $kesediandirekolasi }}">
+								
+								<select class="form-control" name="kesediandirekolasi">
+									<option value="0">-----</option>
+									<option @if($kesediandirekolasi == 'Ya, tahu') selected @endif value="Ya, tahu">Ya, tahu</option>
+									<option @if($kesediandirekolasi == 'Tidak tahu') selected @endif value="Tidak tahu">Tidak tahu</option>
+								</select>
 								<div class="col-md-6">
 
 								</div>
@@ -729,7 +775,11 @@ if(session('aksi') == 'edit'){
 
 							<div class="form-group">
 								<label>Alasan Penolakan Relokasi</label>
-								<input  class="form-control" name="alasanpenolakanrelokasi" type="text" value="{{ $alasanpenolakanrelokasi }}">
+								<select class="form-control" name="alasanpenolakanrelokasi">
+									<option value="0">-----</option>
+									<option @if($alasanpenolakanrelokasi == 'Ya, tahu') selected @endif value="Ya, tahu">Ya, tahu</option>
+									<option @if($alasanpenolakanrelokasi == 'Tidak tahu') selected @endif value="Tidak tahu">Tidak tahu</option>
+								</select>
 								<div class="col-md-6">
 
 								</div>
@@ -737,7 +787,13 @@ if(session('aksi') == 'edit'){
 
 							<div class="form-group">
 								<label>Bentuk Pergantian Disukai</label>
-								<input  class="form-control" name="bentukpergantiandisukai" type="text" value="{{ $bentukpergantiandisukai }}">
+								<select class="form-control" name="bentukpergantiandisukai">
+									<option value="0">-----</option>
+									
+									<option @if($bentukpergantiandisukai == 'Uang tunai') selected @endif value="Uang tunai">Uang tunai</option>
+									<option @if($bentukpergantiandisukai == 'Kavling siap bangun & dana pembangunan rumah') selected @endif value="Kavling siap bangun & dana pembangunan rumah">Kavling siap bangun & dana pembangunan rumah</option>
+									<option @if($bentukpergantiandisukai == 'Rumah jadi') selected @endif value="Rumah jadi">Rumah jadi</option>
+								</select>
 								<div class="col-md-6">
 
 								</div>
@@ -745,7 +801,13 @@ if(session('aksi') == 'edit'){
 
 							<div class="form-group">
 								<label>Pendapat Responden Pemindahan Kolektif</label>
-								<input  class="form-control" name="pendapatrespondenpemindahankolektif" type="text" value="{{ $pendapatrespondenpemindahankolektif }}">
+								
+								<select class="form-control" name="pendapatrespondenpemindahankolektif">
+									<option value="0">-----</option>
+									
+									<option @if($pendapatrespondenpemindahankolektif == 'Rumah jadi') selected @endif value="Lebih baik jika warga dipindahkan secara kolektif Ketempat yang sama">Lebih baik jika warga dipindahkan secara kolektif Ketempat yang sama</option>
+									<option @if($pendapatrespondenpemindahankolektif == 'Rumah jadi') selected @endif value="Lebih baik jika warga dibiarkan memilih tempat yang baru masing-masing">Lebih baik jika warga dibiarkan memilih tempat yang baru masing-masing</option>
+								</select>
 								<div class="col-md-6">
 
 								</div>
@@ -772,9 +834,9 @@ if(session('aksi') == 'edit'){
 							<div class="col-md-12">
 								<div class="foto">
 									<?php 
-									if (file_exists(public_path('assets/foto/bangunan').'/'.$foto)) {
+									if (file_exists(public_path('files/foto/bangunan').'/'.$foto)) {
 									?>
-									<img src="{{ asset('/assets/foto/')}}/{{ $foto }}" alt="{{$no_responden}}" class="img-responsive _foto" width="80%">
+									<img src="{{ asset('/files/foto/bangunan/')}}/{{ $foto }}" alt="{{$no_responden}}" class="img-responsive _foto" width="80%">
 									<?php  
 									}else{
 									?>
@@ -802,7 +864,7 @@ if(session('aksi') == 'edit'){
 									<label>Y</label>
 									<input  class="form-control" name="longitude" type="text" value="{{ $y }}">
 								</div>
-								<div class="form-group">
+								<div class="btn-group">
 									<button type="button" id="checkmap" class="btn btn-primary btn-flat">Lokasi</button>
 									<button type="button" id="checkin" class="btn btn-primary btn-flat">Check In</button>
 								</div>
