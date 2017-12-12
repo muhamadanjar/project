@@ -291,7 +291,7 @@
                             <li><a href="{{ route('backend.setting.profile') }}"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
                             <li><a href="javascript:void(0);"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
                             <li class="divider"></li>
-                            <li><a href="{{ route('logout') }}"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
+                            <li><a href="{{ route('gerbang.logout') }}"><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
                         </ul>
                     </li>
                     <!-- Profile dropdown -->

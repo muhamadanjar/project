@@ -27,7 +27,7 @@ basemapTools.basemapControl = function(opt_options) {
 
     var this_ = this;
     var basemapSource = function(){
-        return ['esri_topo','esri_terrain','esri_street','esri_image','esri_natgeo','esri_ocean','osm']
+        return ['esri_topo','esri_terrain','esri_street','esri_image','esri_natgeo','esri_ocean','osm','bing','rupabumi']
     }
     var findLayerBy = function(layer, key, value) {
         
@@ -62,6 +62,16 @@ basemapTools.basemapControl = function(opt_options) {
                 basemap.getSource().setUrl('http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}');
             }else if(_b == 'esri_ocean'){
                 basemap.getSource().setUrl('http://services.arcgisonline.com/arcgis/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}');
+            }else if(_b == 'rupabumi'){
+                basemap.getSource().setUrl('http://portal.ina-sdi.or.id/arcgis/rest/services/IGD/RupabumiIndonesia/MapServer/tile/{z}/{y}/{x}');
+            }else if(_b == 'bing'){
+                basemap.setSource(new ol.source.BingMaps({
+                    key: 'AsxtakN7WqZ-AjpgvhxvrHgENDh-spnL7HIh3SaLOzmDjN8J4AO-PeSU-j7Ssav0',
+                    imagerySet: 'AerialWithLabels'
+                    // use maxZoom 19 to see stretched tiles instead of the BingMaps
+                    // "no photos at this zoom level" tiles
+                    // maxZoom: 19
+                }));
             }else{
                 basemap.setSource(new ol.source.OSM());
             }

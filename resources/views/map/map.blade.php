@@ -420,6 +420,7 @@
   var tematikGroup,rencanaGroup,citrafotoGroup;
   var container_popup,content_popup,closer_popup,overlay_popup;
   var DefaultCoordinate = [105.3795004,-6.445772];
+  var geolocation;
       var basemapTile = new ol.layer.Tile({
           source: new ol.source.XYZ({
                     //attributions: [attribution],
@@ -478,10 +479,11 @@ function initMap(){
         label: '\u00AB',
         collapsed: true
   });
-  Measuresource = new ol.source.Vector();
-  var vectorMeasure = new ol.layer.Vector({
-    name:'Measure Vector',
-    source: Measuresource,
+  vectorSource = new ol.source.Vector();
+  var vectorLayer = new ol.layer.Vector({
+    name:'Layer Vector',
+    id:'lyr_vector',
+    source: vectorSource,
     style: new ol.style.Style({
       fill: new ol.style.Fill({
             color: 'rgba(255, 255, 255, 0.2)'
@@ -500,7 +502,7 @@ function initMap(){
   });
   map = new ol.Map({
     layers: [
-      basemapTile, tematikGroup,rencanaGroup,citrafotoGroup,vectorMeasure
+      basemapTile, tematikGroup,rencanaGroup,citrafotoGroup,vectorLayer
     ],
     target: 'map',
     view: new ol.View({
@@ -525,6 +527,54 @@ function initMap(){
   });
   map.addControl(mousePosition);
 
+  geolocation = new ol.Geolocation({
+    projection: map.getView().getProjection()
+  });
+  geolocation.setTracking(true);
+
+  geolocation.on('change', function() {
+    console.log('accuracy',geolocation.getAccuracy() + ' [m]');
+    console.log('altitude',geolocation.getAltitude() + ' [m]');
+    console.log('altitudeAccuracy',geolocation.getAltitudeAccuracy() + ' [m]');
+    console.log('heading',geolocation.getHeading() + ' [rad]');
+    console.log('speed',geolocation.getSpeed() + ' [m/s]');
+    console.log('position',geolocation.getPosition());
+  });
+  geolocation.on('error', function(error) {
+    var info = document.getElementById('info');
+    info.innerHTML = error.message;
+    info.style.display = '';
+
+    console.log('info',error.message);
+  });
+
+  var accuracyFeature = new ol.Feature();
+  geolocation.on('change:accuracyGeometry', function() {
+    accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+  });
+
+  var positionFeature = new ol.Feature();
+  positionFeature.setStyle(new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 6,
+      fill: new ol.style.Fill({
+        color: '#3399CC'
+      }),
+      stroke: new ol.style.Stroke({
+        color: '#fff',
+        width: 2
+      })
+    })
+  }));
+
+  geolocation.on('change:position', function() {
+    var coordinates = geolocation.getPosition();
+    positionFeature.setGeometry(coordinates ? new ol.geom.Point(coordinates) : null);
+  });
+
+  var geol = findBy(map.getLayerGroup(), 'id', 'lyr_vector').getSource();
+  geol.addFeature(accuracyFeature);
+  geol.addFeature(positionFeature);
   
 }
 function initPopup(){
@@ -585,9 +635,7 @@ function identifyLayer(layer = 'all') {
     info_event = map.on('click', identifyLayerEvent);
   
 }
-
 function identifyLayerEvent(evt) {
-      
       var features = map.getFeaturesAtPixel(evt.pixel);
       console.log(features);
       if (selectedLayer == 'all') {
@@ -682,7 +730,7 @@ function objLayer(overlaysOBJ) {
       var groupId = $($('#layercontrol').find('ul')[i]).attr('data-parentid');
       var group_ul = $('#layercontrol').find('.panel').find('ul')[i];
       var element = buildLayer(_layer);
-      console.log(group_ul);
+      console.log(groupId);
       if(_layer.parent_id == 14){
         $(element).appendTo($('#layercontrol').find('.panel').find('ul#list-group-administrasi'));
       }
@@ -904,16 +952,11 @@ function createGroupLayer() {
     
   }
 }
-
 function changeInfoMap(info){
   infomap = info;
 }
-
 function zoomToExtent(source) {
-  //console.log(source);
-  /*var extent = source.getExtent();
-  map.getView().fit(extent, map.getSize()); */
-  //console.log(map.getView().getProjection());
+
   var url = '/geoserver/wms?request=GetCapabilities&service=WMS&version=1.1.1';
   var parser = new ol.format.WMSCapabilities();
   $.ajax(url).then(function(response) {
@@ -934,7 +977,6 @@ function zoomToExtent(source) {
     console.log(extent);
   });
 }
-
 function resetFilter() {
   if (pureCoverage) {
     return;
@@ -942,7 +984,6 @@ function resetFilter() {
   document.getElementById('query-text').value = "";
   updateFilter();
 }
-
 function updateFilter(){
   if (pureCoverage) {
     return;
@@ -1046,8 +1087,8 @@ function updateFilter(){
 
     $('#btn-measure').click(function(){
       changeInfoMap('measure');
-      if(Measuresource.getFeatures().length > 0){
-          Measuresource.clear();
+      if(vectorSource.getFeatures().length > 0){
+        vectorSource.clear();
       }
       initMeasure();
 

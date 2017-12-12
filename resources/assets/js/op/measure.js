@@ -10,7 +10,6 @@ measureTools.draw; // global so we can remove it later
 measureTools.typeSelect = document.getElementById('type');
 measureTools.map = window.map;
 
-
 function pointerMoveHandler(evt) {
   if (evt.dragging) {
     return;
@@ -85,7 +84,7 @@ function createMeasureTooltip() {
 function addInteraction() {
   var type = (measureTools.typeSelect.value == 'area' ? 'Polygon' : 'LineString');
   measureTools.draw = new ol.interaction.Draw({
-    source: Measuresource,
+    source: findBy(map.getLayerGroup(), 'id', 'lyr_vector').getSource(),
     type: (type),
     style: new ol.style.Style({
       fill: new ol.style.Fill({
