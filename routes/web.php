@@ -55,10 +55,12 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 	Route::post('setting', ['as' => 'setting.store', 'uses' => 'SettingCtrl@store']);
 	Route::resource('files', 'FileCtrl');
 	Route::resource('log', 'LogCtrl', ['only' => ['index', 'show']]);
-	Route::resource('album', 'AlbumCtrl');
+	/*Route::resource('album', 'AlbumCtrl');
 	Route::resource('media', 'MediaCtrl',['only'=> ['index','create','store','edit','update','destroy']]);
-	Route::post('media/postimage', 'MediaCtrl@postimage')->name('media.postimage');
+	Route::post('media/postimage', 'MediaCtrl@postimage')->name('media.postimage');*/
 
+	Route::resource('layer', 'LayerCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
+	Route::post('layer/post','LayerCtrl@postLayer')->name('layer.post');
 	// User Profile
     Route::group(['prefix' => 'me'], function($router){
         $router->get('/', ['as' => 'me.profile', 'uses' => 'MeCtrl@index']);

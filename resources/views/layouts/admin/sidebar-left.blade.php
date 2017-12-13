@@ -25,11 +25,7 @@
                                     <span class="text">File Manager</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ route('backend.media.index') }}">
-                                    <span class="text">Galeri</span>
-                                </a>
-                            </li>
+                            
                             <li>
                                 <a href="{{ route('backend.dokumen.index') }}">
                                     <span class="text">Dokumen</span>

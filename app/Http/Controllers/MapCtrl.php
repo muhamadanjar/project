@@ -41,7 +41,6 @@ class MapCtrl extends Controller{
     }
 
     public function getData(){
-        //$layer = Layer::where('tipelayer','ol')->whereAktif(1)->orderBy('urutanlayer','DESC')->toSql();
         $layer = Layer::Grouplayer()->where('_l.aktif',1)->orderBy('_l.urutanlayer','DESC')->get();
         return ($layer);
     }

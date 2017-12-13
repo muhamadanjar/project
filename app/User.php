@@ -21,7 +21,7 @@ class User extends Authenticatable
     protected function hasTooManyLoginAttempts(Request $request){
         $maxLoginAttempts = 3;
     
-        $lockoutTime = 1; // Dalam menit
+        $lockoutTime = 15; // Dalam menit
     
         return $this->limiter()->tooManyAttempts(
             $this->throttleKey($request), $maxLoginAttempts, $lockoutTime

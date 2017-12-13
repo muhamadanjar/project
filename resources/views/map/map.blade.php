@@ -166,115 +166,12 @@
 @endsection
 @section('style-theme')
     <style>
-      .main-map{
-        height:100%;
-      }
-      .basemapTools{
-        top: 5px;
-        right: .5em;
-      }
-      .ol-touch .basemapTools {
-        top: 10px;
-      }
-      #map{
-        background: url('/images/noisy_grid.png');
-        padding:0;
-      }
-    </style>
-    <style>
       #layertree li > span {
         cursor: pointer;
       }    
     </style>
-    <style>
-      .ol-popup {
-        position: absolute;
-        background-color: white;
-        -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
-        filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
-        padding: 0;
-        /*border-radius: 10px;*/
-        border: 1px solid #cccccc;
-        bottom: 12px;
-        left: -50px;
-        min-width: 280px;
-        min-height:28vh;
-        overflow-y: 200px;
-        height:200px;
-        /*overflow:scroll;*/
-        
-      }
-      .ol-popup:after, .ol-popup:before {
-        top: 100%;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-      }
-      .ol-popup:after {
-        border-top-color: white;
-        border-width: 10px;
-        left: 48px;
-        margin-left: -10px;
-      }
-      .ol-popup:before {
-        border-top-color: #cccccc;
-        border-width: 11px;
-        left: 48px;
-        margin-left: -11px;
-      }
-      .ol-popup-closer {
-        text-decoration: none;
-        position: absolute;
-        top: 10px;
-        right: 9px;
-        z-index:99999999;
-      }
-      .ol-popup-closer:after {
-        content: "✖";
-      }
-      .info-popup .panel-body{
-        paddingt: 5px;
-        max-height: 300px;
-        overflow-y: scroll;
-      }
-    </style>
-    <style>
-      .ol-custom-overviewmap,
-      .ol-custom-overviewmap.ol-uncollapsible {
-        bottom: 0;
-        left: auto;
-        right: 0;
-        top: auto;
-      }
-
-      .ol-custom-overviewmap:not(.ol-collapsed)  {
-        border: 1px solid black;
-      }
-
-      .ol-custom-overviewmap .ol-overviewmap-map {
-        border: none;
-        width: 300px;
-      }
-
-      .ol-custom-overviewmap .ol-overviewmap-box {
-        border: 2px solid red;
-      }
-
-      .ol-custom-overviewmap:not(.ol-collapsed) button{
-        bottom: auto;
-        left: auto;
-        right: 1px;
-        top: 1px;
-      }
-
-      .ol-rotate {
-        top: 170px;
-        right: 0;
-      }
-    </style>
+    <link rel="stylesheet" href="{{ url('css/popup.css')}}">
+    <link rel="stylesheet" href="{{ url('css/overview.css')}}">
     <style>
       button.layer-control {
           background-color: #eee;
@@ -407,6 +304,7 @@
 <script type="text/javascript" src="{{ url('assets/plugins/inputmask/js/inputmask.js')}}"></script>
 <script type="text/javascript" src="{{ url('assets/plugins/select2/js/select2.js')}}"></script>
 <script type="text/javascript" src="{{ url('assets/plugins/touchspin/js/jquery.bootstrap-touchspin.js')}}"></script>
+<script type="text/javascript" src="{{ url('assets/plugins/owl/js/owl.carousel.js')}}"></script>
 
 <script type="text/javascript">
   var map;
@@ -531,7 +429,7 @@ function initMap(){
   geolocation = new ol.Geolocation({
     projection: map.getView().getProjection()
   });
-  geolocation.setTracking(true);
+  //geolocation.setTracking(true);
 
   geolocation.on('change', function() {
     console.log('accuracy',geolocation.getAccuracy() + ' [m]');
@@ -592,7 +490,7 @@ function initPopup(){
   }));
   closer_popup.onclick = function() {
       overlay_popup.setPosition(undefined);
-      closer.blur();
+      closer_popup.blur();
       return false;
   };
   map.addOverlay(overlay_popup);
@@ -638,7 +536,7 @@ function identifyLayer(layer = 'all') {
 }
 function identifyLayerEvent(evt) {
       var features = map.getFeaturesAtPixel(evt.pixel);
-      console.log(features);
+      //console.log(features);
       if (selectedLayer == 'all') {
         var url = __root__.getSource()
             .getGetFeatureInfoUrl(
@@ -685,10 +583,12 @@ function identifyLayerEvent(evt) {
         content = tablePopup(feature)
         var props = feature.properties;
         //console.log(props);
+
                           
         var coordinate = evt.coordinate;
         content_popup.innerHTML = content;
         overlay_popup.setPosition(coordinate);
+        
       });
 }
 function updateInteractiveLayers(layer) {
@@ -731,12 +631,9 @@ function objLayer(overlaysOBJ) {
       var groupId = $($('#layercontrol').find('ul')[i]).attr('data-kodegroup');
       var group_ul = $('#layercontrol').find('.panel').find('ul')[i];
       var element = buildLayer(_layer);
-      console.log(_layer.parent_id,groupId);
-      //if(_layer.kodegroup == 'pandeglang:administrasi'){
-        $(element).appendTo($('#layercontrol').find('.panel').find('ul#list-group-'+_layer.kodegroup.split(":")[1]));
-      //}
+      $(element).appendTo($('#layercontrol').find('.panel').find('ul#list-group-'+_layer.kodegroup.split(":")[1]));
       
-      $('#layertree').empty().append(ul_layer_tematik);
+      //$('#layertree').empty().append(ul_layer_tematik);
       var wmsSource = new ol.source.TileWMS({     
         url: overlaysOBJ[i].urllayer/*'/geoserver/wms'*/,
         params: {
@@ -750,14 +647,15 @@ function objLayer(overlaysOBJ) {
       var wmsLayerTile = new ol.layer.Tile({
         source: wmsSource,
         visible: overlaysOBJ[i].option_visible,
+        opacity: overlaysOBJ[i].option_opacity,
         name: overlaysOBJ[i].namalayer,
         id: overlaysOBJ[i].kodelayer
       });
       layer_global.push(wmsLayerTile);
       singleAllLayers = wmsLayerTile;
-      if(overlaysOBJ[i].option_visible){
+      //if(overlaysOBJ[i].option_visible){
         updateInteractiveLayers(overlaysOBJ[i].kodelayer);
-      }
+      //}
       
     }
     tematikGroup.setLayers(layer_global);
@@ -765,10 +663,11 @@ function objLayer(overlaysOBJ) {
 }
 function tablePopup(feature){
   if (feature) {
-    var content = "<div class='panel-group info-popup' id='accordionPopup'>";
+    var content = "<div class='panel-group info-popup owl-carousel' id='accordionPopup'>";
+    
     if(feature.length > 0){
       for (var f in feature) {
-        content += "<div class='panel panel-default'>";
+        content += "<div class='panel panel-default item table-layout'>";
         content += "<div class='panel-heading'><h6 class='panel-title'><i class='icon-accessibility'></i><b><a data-toggle='collapse' data-parent='#accordionPopup' href='#"+feature[f].id+"' class='collapsed'>"+feature[f].id+"</a></b></h6></div>";
         content += "<div id='"+feature[f].id+"' class='panel-collapse collapse in'>";
         content += "<div class='panel-body' class='max-height: 70vh;overflow-y: scroll;'>";
@@ -908,6 +807,12 @@ function buildLayer(_layer) {
 }
 function layerclickEvent(e) {
   if($(e.target).hasClass('transparan')){
+    if($(e.target).hasClass('active')){
+      $(e.target).removeClass('active');
+    }else{
+      $(e.target).addClass('active');
+    }
+    
     $(this).find('fieldset#opacity').toggle();
   }else if($(e.target).hasClass('legenda')){
     $(this).find('fieldset#legend').toggle();
@@ -1029,9 +934,9 @@ function updateFilter(){
   });
 
 	$(document).ready(function() {
-    $("div.main-map").css("height", $(window).height()+'px');
+    $("div.main-map").css("height", $(window).height() - ($(window).height() * 0.12)+'px');
     $(window).resize(function(){
-      $("div.main-map").css("height", $(window).height()+'px');
+      $("div.main-map").css("height", $(window).height() - ($(window).height() * 0.12)+'px');
     });
     
 		$('.main-map').layout({

@@ -73,3 +73,20 @@
         left: 10px;
     }
 }
+
+.main-map{
+    height:100%;
+}
+.basemapTools{
+    top: 5px;
+    right: .5em;
+}
+.ol-touch .basemapTools {
+    top: 10px;
+}
+#map{
+    background: url('/images/noisy_grid.png');
+    padding:0;
+}
+
+/*@import url('popup.csss');*/
