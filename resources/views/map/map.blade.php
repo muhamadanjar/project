@@ -728,13 +728,13 @@ function objLayer(overlaysOBJ) {
 
     for (var i=0; i<overlaysOBJ.length; i++) {
       var _layer = overlaysOBJ[i];
-      var groupId = $($('#layercontrol').find('ul')[i]).attr('data-parentid');
+      var groupId = $($('#layercontrol').find('ul')[i]).attr('data-kodegroup');
       var group_ul = $('#layercontrol').find('.panel').find('ul')[i];
       var element = buildLayer(_layer);
       console.log(_layer.parent_id,groupId);
-      if(_layer.parent_id == 14){
-        $(element).appendTo($('#layercontrol').find('.panel').find('ul#list-group-administrasi'));
-      }
+      //if(_layer.kodegroup == 'pandeglang:administrasi'){
+        $(element).appendTo($('#layercontrol').find('.panel').find('ul#list-group-'+_layer.kodegroup.split(":")[1]));
+      //}
       
       $('#layertree').empty().append(ul_layer_tematik);
       var wmsSource = new ol.source.TileWMS({     
@@ -948,6 +948,7 @@ function createGroupLayer() {
     ul_group.setAttribute('class','list-group');
     ul_group.setAttribute('id','list-group-'+_group.kodelayer.split(':')[1]);
     ul_group.setAttribute('data-parentid',_group.id);
+    ul_group.setAttribute('data-kodegroup',_group.kodelayer);
     div.append(ul_group);
     _div.append(div);
     
