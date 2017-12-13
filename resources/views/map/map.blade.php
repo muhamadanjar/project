@@ -178,6 +178,7 @@
       }
       #map{
         background: url('/images/noisy_grid.png');
+        padding:0;
       }
     </style>
     <style>
@@ -730,7 +731,7 @@ function objLayer(overlaysOBJ) {
       var groupId = $($('#layercontrol').find('ul')[i]).attr('data-parentid');
       var group_ul = $('#layercontrol').find('.panel').find('ul')[i];
       var element = buildLayer(_layer);
-      console.log(groupId);
+      console.log(_layer.parent_id,groupId);
       if(_layer.parent_id == 14){
         $(element).appendTo($('#layercontrol').find('.panel').find('ul#list-group-administrasi'));
       }
@@ -1111,19 +1112,5 @@ function updateFilter(){
     
 	});
 </script>
-<script>
-  var acc = document.getElementsByClassName("layer-control");
-  var i;
-  for (i = 0; i < acc.length; i++) {
-    acc[i].onclick = function() {
-      this.classList.toggle("active");
-      var panel = this.nextElementSibling;
-      if (panel.style.maxHeight){
-        panel.style.maxHeight = null;
-      } else {
-        panel.style.maxHeight = panel.scrollHeight + "px";
-      } 
-    }
-  }
-</script>
+
 @endsection
