@@ -31,7 +31,7 @@ if(session('aksi') == 'edit'){
                             <button type="submit" class="btn btn-sm btn-primary">
                                 <i class="fa fa-send ico-save"></i> Simpan
                             </button>
-                            <a href="{{ route('backend.posts.index') }}" class=" btn btn-sm btn-primary">
+                            <a href="{{ route('backend.pengaturan.users') }}" class=" btn btn-sm btn-primary">
                             <i class="fa fa-mail-reply ico-reply3"></i> Kembali</a>
                         </div>
                     </div>

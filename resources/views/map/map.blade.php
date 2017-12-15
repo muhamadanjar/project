@@ -313,6 +313,7 @@
   var singleAllLayers;
   var intLayersString,intLayers = [];
   var selectedLayer = 'all';
+  var searchLayer = 'pandeglang:poi_pandeglang';
   var overlaysOBJ;//Store array data from database
   var layer_global = [];
   var pureCoverage = false;
@@ -668,7 +669,7 @@ function tablePopup(feature){
     if(feature.length > 0){
       for (var f in feature) {
         content += "<div class='panel panel-default item table-layout'>";
-        content += "<div class='panel-heading'><h6 class='panel-title'><i class='icon-accessibility'></i><b><a data-toggle='collapse' data-parent='#accordionPopup' href='#"+feature[f].id+"' class='collapsed'>"+feature[f].id+"</a></b></h6></div>";
+        content += "<div class='panel-heading'><h6 class='panel-title'><i class='icon-accessibility'></i><b><a data-toggle='collapse' data-parent='#accordionPopup' href='#"+feature[f].id+"' class='collapsed'>"+feature[f].id+"</a></b></h6><div class='panel-toolbar text-right'><div class='btn-group'><button class='btn btn-sm btn-default btn-popup-close'><i class='ico-close4'></i></button></div></div></div>";
         content += "<div id='"+feature[f].id+"' class='panel-collapse collapse in'>";
         content += "<div class='panel-body' class='max-height: 70vh;overflow-y: scroll;'>";
         content += "<table class='table table-striped'>";
@@ -901,15 +902,15 @@ function updateFilter(){
       'CQL_FILTER': null,
       'FEATUREID': null
   };
+  var layer = findBy(map.getLayerGroup(), 'id', searchLayer);
   if (filter.replace(/^\s\s*/, '').replace(/\s\s*$/, '') != "") {
     filterParams["CQL_FILTER"] = "WHERE name LIKE '%"+filter+"%'";
-    var layer = findBy(map.getLayerGroup(), 'id', 'pandeglang:poi_pandeglang');
+    
     console.log(filterParams);
     layer.getSource().updateParams(filterParams);
   }
   if(filter == ""){
     filterParams["CQL_FILTER"] = null;
-    var layer = findBy(map.getLayerGroup(), 'id', 'pandeglang:poi_pandeglang');
     layer.getSource().updateParams(filterParams);
   }
 }

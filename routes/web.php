@@ -12,10 +12,9 @@
 */
 
 Route::get('/', function ($value=''){
-	return redirect()->route('gerbang.login');
+	return view('welcome');
+	//return redirect()->route('gerbang.login');
 });
-
-
 
 Route::group(['prefix'=>'gerbang'], function(){
 	Route::get('login','AuthCtrl@showLoginForm')->name('gerbang.login');

@@ -11,6 +11,13 @@
                         </a>
                     </li>
 
+                    <li class="{{ (session('link_web') == 'layer')?'active':'' }} open">
+                        <a href="{{ route('backend.layer.index') }}" data-parent=".topmenu">
+                            <span class="figure"><i class="ico-layer"></i></span>
+                            <span class="text">Layer</span>
+                        </a>
+                    </li>
+
                     <li >
                         <a href="javascript:void(0);" data-toggle="submenu" data-target="#file" data-parent=".topmenu">
                             <span class="figure"><i class="ico-table22"></i></span>
