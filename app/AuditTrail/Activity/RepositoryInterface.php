@@ -13,4 +13,9 @@ interface RepositoryInterface {
     public function totalhits();
     public function pengunjungonline($bataswaktu);
     public function totalpengunjung();
+    function ip_user();
+    function _userAgent();
+    function os_user();
+    function browser_user();
+    public function statistikPengunjung();
 }

@@ -12,11 +12,15 @@
   <link rel="stylesheet" href="{{ asset('assets/adminlte/plugins/iCheck/square/blue.css')}}">
   <style type="text/css">
     html { 
-      background: url({{ url('assets/images/bg_login.png') }}) no-repeat center center fixed;
+      background: url({{ url('assets/images/bg_login_2.png') }}) no-repeat center center fixed;
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
       background-size: cover;
+    }
+
+    body{
+      background: none !important;
     }
 
     #trans{
@@ -45,9 +49,10 @@
     }
 
     .login-box, .register-box {
-      width: 330px;
-      padding-top: 5%;
-      margin: 5% auto ;
+      width: 360px;
+      padding-top: 12%;
+      padding-left: 5%;
+      margin: 0;
     }
 
     .login-box-body, .register-box-body {
@@ -78,7 +83,7 @@
     }
 
     .login-box-body label{
-      color: #fff;
+      color: #000;
       font-size: 14px;
     }
 
@@ -102,16 +107,16 @@
 <div class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <a href="../../index2.html"><b>Admin</b>LTE</a>
+      <a href="../../index2.html"><b>SIM</b>JALA</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">Masuk untuk Membuka Aplikasi</p>
 
       <form action="{{ route('gerbang.postlogin') }}" method="post">
         {{ csrf_field() }}
         <div class="form-group has-feedback">
-          <input type="text" class="form-control" placeholder="Email" name="username">
+          <input type="text" class="form-control" placeholder="Username" name="username">
           <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
@@ -128,23 +133,23 @@
           </div>
           <!-- /.col -->
           <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Masuk</button>
           </div>
           <!-- /.col -->
         </div>
       </form>
 
-      <div class="social-auth-links text-center">
+      <!--<div class="social-auth-links text-center">
         <p>- OR -</p>
         <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
           Facebook</a>
         <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
           Google+</a>
-      </div>
+      </div>-->
       <!-- /.social-auth-links -->
 
-      <a href="#">I forgot my password</a><br>
-      <a href="register.html" class="text-center">Register a new membership</a>
+      <!--<a href="#">I forgot my password</a><br>
+      <a href="register.html" class="text-center">Register a new membership</a>-->
 
     </div>
     <!-- /.login-box-body -->

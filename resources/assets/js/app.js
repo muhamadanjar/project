@@ -9,6 +9,14 @@ require('./bootstrap');
 import React from 'react';
 import ReactDom,{ render } from 'react-dom';
 import { Router, Route, browserHistory } from 'react-router';
+
+
+import Master from './components/Master';
+import CreateItem from './components/CreateItem';
+import DisplayItem from './components/DisplayItem';
+import EditItem from './components/EditItem';
+
+
 //window.Vue = require('vue');
 
 /**

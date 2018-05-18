@@ -60,6 +60,7 @@
                 <div class="form-group">
                   <label for="tipelayer">Tipe Layer</label>
                   <select name="tipelayer" id="tipelayer" class="form-control">
+                    <option value="esri" @if($tipelayer == 'esri') selected @endif>Esri</option>
                     <option value="ol" @if($tipelayer == 'ol') selected @endif>Ol</option>
                     <option value="olgroup" @if($tipelayer == 'olgroup') selected @endif>OL Group</option>
                   </select>

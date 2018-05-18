@@ -12,8 +12,8 @@
 */
 
 Route::get('/', function ($value=''){
-	return view('welcome');
-	//return redirect()->route('gerbang.login');
+	//return view('welcome');
+	return redirect()->route('gerbang.login');
 });
 
 Route::group(['prefix'=>'gerbang'], function(){
@@ -22,8 +22,9 @@ Route::group(['prefix'=>'gerbang'], function(){
 	Route::get('logout','AuthCtrl@logout')->name('gerbang.logout');
 });
 
-Route::group(['prefix'=>'map','as'=>'map.'], function(){
+Route::group(['prefix'=>'map','as'=>'map.','middleware' => 'cors'], function(){
 	Route::get('/','MapCtrl@getIndex')->name('index');
+	Route::get('/viewer','MapCtrl@getViewer')->name('index.esri');
 	Route::get('/bangunan','MapCtrl@getBangunan')->name('getdatabangunan');
 	Route::get('/op','MapCtrl@getOpMap')->name('map.op');
 	Route::get('/getdata','MapCtrl@getData')->name('getdata');

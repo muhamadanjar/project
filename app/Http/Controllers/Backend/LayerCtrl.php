@@ -11,13 +11,13 @@ class LayerCtrl extends BackendCtrl{
         $this->layer = $lr;
     }
     public function index(){
-        $layer = $this->layer->getlayer();
+        $layer = $this->layer->getlayeresri();
         return view('backend.layer.index')->with('layer',$layer);
     }
 
     public function create(){
         session(['aksi'=>'tambah']);
-        $group = $this->layer->getgroups();
+        $group = $this->layer->getgroups('esrigroup');
         return view('backend.layer.tambah')->with('groups',$group);
     }
 
@@ -39,6 +39,7 @@ class LayerCtrl extends BackendCtrl{
     }
 
     public function update($request){
+        
         $this->postLayer($request);
     }
 

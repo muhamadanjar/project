@@ -48,6 +48,6 @@
   }
   .info-popup .panel-body{
     paddingt: 5px;
-    max-height: 300px;
+    max-height: 155px;
     overflow-y: scroll;
   }

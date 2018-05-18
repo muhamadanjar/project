@@ -5,6 +5,9 @@
 @endsection
 
 @section('content-dashboard')
+<?php 
+    $_statistik = json_decode($chartstatistik);
+?>
         <section id="main" role="main">
                 <div class="row">
                     <!-- START Left Side -->
@@ -19,8 +22,8 @@
                                     </div>
                                     <div class="col-xs-8 panel">
                                         <div class="panel-body text-center">
-                                            <h4 class="semibold nm">1845</h4>
-                                            <p class="semibold text-muted mb0 mt5 ellipsis">REGISTERED USERS</p>
+                                            <h4 class="semibold nm">{{$countuser}}</h4>
+                                            <p class="semibold text-muted mb0 mt5 ellipsis">USERS</p>
                                         </div>
                                     </div>
                                 </div>
@@ -30,12 +33,12 @@
                                 <!-- START Statistic Widget -->
                                 <div class="table-layout animation delay animating fadeInUp">
                                     <div class="col-xs-4 panel bgcolor-teal text-center">
-                                        <div class="ico-crown fsize24"></div>
+                                        <div class="ico-stack fsize24"></div>
                                     </div>
                                     <div class="col-xs-8 panel">
                                         <div class="panel-body text-center">
-                                            <h4 class="semibold nm">187</h4>
-                                            <p class="semibold text-muted mb0 mt5 ellipsis">PENDING ACTION</p>
+                                            <h4 class="semibold nm">{{$countlayer}}</h4>
+                                            <p class="semibold text-muted mb0 mt5 ellipsis">Layer</p>
                                         </div>
                                     </div>
                                 </div>
@@ -45,12 +48,12 @@
                                 <!-- START Statistic Widget -->
                                 <div class="table-layout animation delay animating fadeInDown">
                                     <div class="col-xs-4 panel bgcolor-primary text-center">
-                                        <div class="ico-box-add fsize24"></div>
+                                        <div class="ico-users3 fsize24"></div>
                                     </div>
                                     <div class="col-xs-8 panel">
                                         <div class="panel-body text-center">
                                             <h4 class="semibold nm">10</h4>
-                                            <p class="semibold text-muted mb0 mt5 ellipsis">UPDATE AVAILABLE</p>
+                                            <p class="semibold text-muted mb0 mt5 ellipsis">User</p>
                                         </div>
                                     </div>
                                 </div>
@@ -67,10 +70,10 @@
                                     <!-- panel-toolbar -->
                                     <div class="panel-heading pt10">
                                         <div class="panel-toolbar">
-                                            <h5 class="semibold nm ellipsis">Website States</h5>
+                                            <h5 class="semibold nm ellipsis">Statistik Pengunjung</h5>
                                         </div>
                                         <div class="panel-toolbar text-right">
-                                            <div class="btn-group">
+                                            <!--<div class="btn-group">
                                                 <button type="button" class="btn btn-sm btn-default">Duration</button>
                                                 <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
                                                 <ul class="dropdown-menu dropdown-menu-right">
@@ -80,13 +83,14 @@
                                                     <li><a href="#">Week</a></li>
                                                     <li><a href="#">Day</a></li>
                                                 </ul>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
                                     <!--/ panel-toolbar -->
                                     <!-- panel-body -->
                                     <div class="panel-body pt0">
-                                        <div class="chart mt10" id="chart-audience" style="height:250px;"></div>
+                                        <!--<div class="chart mt10" id="chart-audience" style="height:250px;"></div>-->
+                                        <div id="statistik" style="min-width: 310px; max-width: 800px; height: 300px; margin: 0 auto"></div>
                                     </div>
                                     <!--/ panel-body -->
                                     <!-- panel-footer -->
@@ -132,95 +136,7 @@
                         <!--/ Website States -->
 
                         <!-- Browser Breakpoint -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <!-- START panel -->
-                                <div class="panel panel-default">
-                                    <!-- panel heading/header -->
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title ellipsis"><i class="ico-chrome mr5"></i>Browser Breakpoint</h3>
-                                        <!-- panel toolbar -->
-                                        <div class="panel-toolbar text-right">
-                                            <!-- option -->
-                                            <div class="option">
-                                                <button class="btn up" data-toggle="panelcollapse"><i class="arrow"></i></button>
-                                                <button class="btn" data-toggle="panelremove" data-parent=".col-md-12"><i class="remove"></i></button>
-                                            </div>
-                                            <!--/ option -->
-                                        </div>
-                                        <!--/ panel toolbar -->
-                                    </div>
-                                    <!--/ panel heading/header -->
-                                    <!-- panel body with collapse capabale -->
-                                    <div class="table-responsive panel-collapse pull out">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Browser Name</th>
-                                                    <th>Rendering Engine</th>
-                                                    <th>Platform</th>
-                                                    <th>Activity</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><span class="semibold text-accent">Google Chrome</span></td>
-                                                    <td>Webkit</td>
-                                                    <td>Win 2k+ / OSX.3+</td>
-                                                    <td>
-                                                        <span class="sparklines" sparkType="bar" sparkBarColor="#ed5466">2,4,1,5,3</span>
-                                                        <span class="text-muted mr5 ml5">•</span>
-                                                        <span class="semibold text-muted">50.65%</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="semibold text-accent">Safari</span></td>
-                                                    <td>Webkit</td>
-                                                    <td>Win 2k+ / OSX.3+</td>
-                                                    <td>
-                                                        <span class="sparklines" sparkType="bar" sparkBarColor="#ed5466">5,2,1,3,4</span>
-                                                        <span class="text-muted mr5 ml5">•</span>
-                                                        <span class="semibold text-muted">20.31%</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="semibold text-accent">Mozilla Firefox</span></td>
-                                                    <td>Webkit</td>
-                                                    <td>Win 2k+ / OSX.3+</td>
-                                                    <td>
-                                                        <span class="sparklines" sparkType="bar" sparkBarColor="#ed5466">2,1,5,3,4</span>
-                                                        <span class="text-muted mr5 ml5">•</span>
-                                                        <span class="semibold text-muted">61.22%</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="semibold text-accent">Internet Explorer</span></td>
-                                                    <td>Trident</td>
-                                                    <td>Win 2k+ / OSX.3+</td>
-                                                    <td>
-                                                        <span class="sparklines" sparkType="bar" sparkBarColor="#ed5466">3,1,4,5,2</span>
-                                                        <span class="text-muted mr5 ml5">•</span>
-                                                        <span class="semibold text-muted">0.65%</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><span class="semibold text-accent">Opera</span></td>
-                                                    <td>Presto</td>
-                                                    <td>Win 2k+ / OSX.3+</td>
-                                                    <td>
-                                                        <span class="sparklines" sparkType="bar" sparkBarColor="#ed5466">1,2,3,4,5</span>
-                                                        <span class="text-muted mr5 ml5">•</span>
-                                                        <span class="semibold text-muted">10.87%</span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!--/ panel body with collapse capabale -->
-                                </div>
-                                <!--/ END panel -->
-                            </div>
-                        </div>
+                        
                         <!-- Browser Breakpoint -->
                     </div>
                     <!--/ END Left Side -->
@@ -230,7 +146,7 @@
                         <div class="panel panel-minimal">
                             <div class="panel-heading"><h5 class="panel-title"><i class="ico-health mr5"></i>Latest Activity</h5></div>
                         
-                            <!-- Media list feed -->
+                            <!--
                             <ul class="media-list media-list-feed nm">
                                 <li class="media">
                                     <div class="media-object pull-left">
@@ -301,7 +217,7 @@
                                     </div>
                                 </li>
                             </ul>
-                            <!--/ Media list feed -->
+                            -->
                         </div>
                     </div>
                     <!--/ END Right Side -->
@@ -310,6 +226,7 @@
 @endsection
 
 @section('script-end')
+        <script type="text/javascript" src="{{ url('assets/plugins/highcharts/highcharts.js')}}"></script>
         <script type="text/javascript" src="{{ url('assets/plugins/selectize/js/selectize.js')}}"></script>
         <script type="text/javascript" src="{{ url('assets/plugins/flot/js/jquery.flot.js')}}"></script>
         <script type="text/javascript" src="{{ url('assets/plugins/flot/js/jquery.flot.resize.js')}}"></script>
@@ -318,4 +235,92 @@
         <script type="text/javascript" src="{{ url('assets/plugins/flot/js/jquery.flot.tooltip.js')}}"></script>
         <script type="text/javascript" src="{{ url('assets/plugins/flot/js/jquery.flot.spline.js')}}"></script>
         <script type="text/javascript" src="{{ url('/javascript/backend/pages/dashboard-v1.js')}}"></script>
+        <script>
+            @if(isset($_statistik->chart))
+            var chart = Highcharts.chart('statistik', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: null
+                },
+                subtitle: {
+                    text: null
+                },
+                xAxis: {
+                    categories: {!!json_encode($_statistik->category)!!},
+                    type: 'datetime',
+                },
+                yAxis: {
+                    title: {
+                        text: 'Stasistik Per Bulan'
+                    },
+                    labels: {
+                        formatter: function () {
+                            return this.value / 1000 + 'k';
+                        }
+                    }
+                },
+                tooltip: {
+                    //pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+                    headerFormat: 'Statistik: {point.x:.1f} km<br>',
+                    pointFormat: '{point.y} m a. s. l.',
+                    shared: true
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: {!! json_encode($_statistik->chart,JSON_NUMERIC_CHECK) !!},
+                legend: {
+                    enabled: false
+                },
+                credits:{
+                    enabled:false
+                },
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                align: 'center',
+                                verticalAlign: 'bottom',
+                                layout: 'horizontal'
+                            },
+                            yAxis: {
+                                labels: {
+                                    align: 'left',
+                                    x: 0,
+                                    y: -5
+                                },
+                                title: {
+                                    text: null
+                                }
+                            },
+                            subtitle: {
+                                text: null
+                            },
+                            credits: {
+                                enabled: false
+                            }
+                        }
+                    }]
+                }
+            });
+
+            $('#small').click(function () {
+                chart.setSize(400, 300);
+            });
+
+            $('#large').click(function () {
+                chart.setSize(600, 300);
+            });
+            @endif
+        </script>
 @endsection

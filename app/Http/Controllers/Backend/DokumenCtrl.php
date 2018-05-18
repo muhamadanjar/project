@@ -76,7 +76,9 @@ class DokumenCtrl extends BackendCtrl
         $vdir_upload ='files/uploads/dokumen';
         if (Gate::check('edit.dokumen')) {
             $dokumen = \App\Dokumen::findOrFail($id);
-            unlink(public_path().$vdir_upload.DIRECTORY_SEPARATOR.$dokumen->upload);
+            if(file_exists($dokumen->getPathDownload().DIRECTORY_SEPARATOR.$dokumen->upload)){
+                unlink($dokumen->getPathDownload().DIRECTORY_SEPARATOR.$dokumen->upload);
+            }
             $dokumen->delete();
             return redirect()->route('backend.dokumen.index');
         }

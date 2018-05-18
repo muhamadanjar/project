@@ -31,7 +31,7 @@ if(session('aksi') == 'edit'){
                             <button type="submit" class="btn btn-sm btn-primary">
                                 <i class="fa fa-send ico-save"></i> Simpan
                             </button>
-                            <a href="{{ route('backend.pengaturan.users') }}" class=" btn btn-sm btn-primary">
+                            <a href="{{ route('backend.posts.index') }}" class=" btn btn-sm btn-primary">
                             <i class="fa fa-mail-reply ico-reply3"></i> Kembali</a>
                         </div>
                     </div>
@@ -47,7 +47,7 @@ if(session('aksi') == 'edit'){
                 </div>
                 <div class="form-group">
                     <label for="name">Username</label>
-                    <input type="text" id="name" class="form-control" name="username" value="{{$username}}">
+                    <input type="text" id="name" class="form-control" name="username" value="{{$username}}" @if(session('aksi') =='edit') readonly @endif>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -63,20 +63,17 @@ if(session('aksi') == 'edit'){
                 <div class="form-group">
                     <label for="">Group</label>
                     @foreach($role as $key => $group)
-                        <?php $c='';?>
-		            	@if(session('aksi')=='edit')
-		            	<?php $c = ($users->hasRole($group->name)) ? 'checked': ''; ?>
-		            	@endif
+                    
                         <div class="checkbox">
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="groups[]" value="{{ $group->id }}" {{$c}}/>
+                                <input type="checkbox" name="groups[]" value="{{ $group->id }}"  @if($users->isRole($group->name)) checked @endif/>
                             {{ $group->name }}
                             </label>
                         </div>
                     @endforeach
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary">Proses</button>
                 </div>
             </div>
         </div>

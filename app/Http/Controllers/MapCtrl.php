@@ -13,6 +13,10 @@ class MapCtrl extends Controller{
         return view('map.map');
     }
 
+    public function getViewer(){
+        return view('map.esri');
+    }
+
     public function getBangunan(){
         $bangunan = BangunanCiawi::orderBy('nama')->limit(1000)->get();
         return json_encode($bangunan);

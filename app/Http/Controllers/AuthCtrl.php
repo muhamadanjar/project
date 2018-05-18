@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class AuthCtrl extends Controller{
 	use RedirectsUsers, ThrottlesLogins;
-    public $redirectTo = '/';
+    public $redirectTo = '/map/viewer';
 	public function __construct($value=''){
         $this->middleware('guest', ['except' => 'logout']);
         //$this->redirect = new RedirectsUsers();
@@ -75,13 +75,15 @@ class AuthCtrl extends Controller{
     protected function attemptLogin(Request $request)
     {
         $users = \App\User::where($this->username(),$request->username)->first();
-        if (count($users) > 0) {
-            if ($users->isactived) {
-                return $this->guard()->attempt(
-                    $this->credentials($request), $request->has('remember')
-                );
-            }
-        }
+        $credentials = [
+            'username' => $request->username,
+            'password' => $request->password,
+            //'is_verified' => 1,
+            'isactived' => 1
+        ];
+        return $this->guard()->attempt(
+            $credentials
+        );
         
         return $this->sendFailedLoginResponse($request);
     }

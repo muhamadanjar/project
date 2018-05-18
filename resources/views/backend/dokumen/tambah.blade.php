@@ -34,15 +34,7 @@
                   <label for="tanggal">Tanggal</label>
                   <input type="text" name="tanggal" class="form-control datepicker" id="tanggal" value="{{$tanggal}}">
                 </div>
-                <div class="form-group">
-                  <label for="tanggal">Kategori</label>
-                  <select name="kategori" class="form-control">
-                    <option value="">-----------</option>
-                    @foreach($dokumen->getKategori() as $key)
-                    <option value="{{$key}}" @if($kategori == $key) selected @endif>{{$key}}</option>
-                    @endforeach
-                  </select>
-                </div>
+                
                 <div class="form-group">
                   <label for="tanggal">File Upload</label>
                   <input type="file" name="upload" class="form-control" id="upload">

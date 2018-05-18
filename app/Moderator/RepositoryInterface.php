@@ -42,4 +42,6 @@ interface RepositoryInterface {
 
     function watermark_image($oldimage_name);
 
+    function countUser();
+
 }

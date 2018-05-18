@@ -17,7 +17,7 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../image/touch/apple-touch-icon-114x114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../image/touch/apple-touch-icon-72x72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="../image/touch/apple-touch-icon-57x57-precomposed.png">
-        <link rel="shortcut icon" href="{{ url('/image/favicon.ico')}}">
+        <link rel="shortcut icon" href="{{ url('/assets/images/logo.png')}}">
         <!--/ END META SECTION -->
 
         <!-- START STYLESHEETS -->
@@ -36,6 +36,7 @@
         <script>
             window.Laravel = <?php echo json_encode([
                 'csrfToken' => csrf_token(),
+                'geoserver_url' => getenv('GEOSERVER_URL'),
             ]); ?>
         </script>
     </head>

@@ -287,7 +287,7 @@
                                 </div>-->
                             </li>
                             <li class="divider"></li>
-                            <li><a href="javascript:void(0);"><span class="icon"><i class="ico-user-plus2"></i></span> My Accounts</a></li>
+                            <li><a href="{{ route('map.index') }}"><span class="icon"><i class="ico-map"></i></span> Peta</a></li>
                             <li><a href="{{ route('backend.setting.profile') }}"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
                             <li><a href="javascript:void(0);"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
                             <li class="divider"></li>

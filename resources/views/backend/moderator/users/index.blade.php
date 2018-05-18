@@ -1,5 +1,9 @@
-@extends('layouts.admin.admin')
-
+@extends('layouts.adminlte.main')
+@section('style-head')
+@parent
+<link rel="stylesheet" href="{{ url('assets/plugins/datatables/css/datatables.css')}}">
+<link rel="stylesheet" href="{{ url('assets/plugins/datatables/css/tabletools.css')}}">
+@endsection
 @section('content-admin')
 
 <div class="container-fluid">
@@ -8,11 +12,16 @@
             <h6 class="panel-title">Manajemen User</h6>
             <div class="panel-toolbar text-right">
                 <span class="subtitle">{{ count($users) }} User Terdaftar</span>
+                <div class="btn-group pull-right">
+                    
+                    <a href="{{ route('backend.pengaturan.users.create') }}" class=" btn btn-sm btn-primary">
+                    <i class="fa fa-mail-reply ico-user-plus2"></i> Tambah</a>
+                </div>
             </div>
             
             {{--<a class="btn btn-default" href="{{ route('backend.pengaturan.users.create') }}"><i class="ion-plus"></i> Tambah User</a>--}}
         </div>
-        <table class="table" id="table_dom">
+        <table class="table display" id="table_dom">
             <thead>
             <tr>
                 <th>Nama</th>
@@ -25,10 +34,10 @@
                 <?php $class_active = ($user->isactived==0) ? 'btn-danger':'' ?>
                 <?php $fa_active = ($user->isactived==0) ? 'fa-circle':'fa-circle-o' ?>
                 <?php 
-							$currentuser_class = '';
-							if(\Auth::user()->id == $user->id){
-								$currentuser_class = 'disabled';
-							}
+					$currentuser_class = '';
+					if(\Auth::user()->id == $user->id){
+						$currentuser_class = 'disabled';
+					}
 				?>
                 <tr>
                     <td>{{ $user->name }}</td>
@@ -39,7 +48,7 @@
                                 <a href="{{ route('backend.pengaturan.users.edit', [$user->id]) }}" class="btn btn-default btn-xs">Edit</a>
                                 <a href="{{ route('backend.pengaturan.users.resetpassword', [$user->id]) }}" class="btn btn-xs btn-info btn-reset-password">Reset Password</a>
                                 <input type="hidden" name="_method" value="delete">
-                                <button type="submit" class="btn btn-danger btn-xs btn-delete">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-xs btn-delete @if($user->isSuper()) disabled @endif">Delete</button>
                                 
                             </div>
                         </form>
@@ -77,16 +86,29 @@
 
 @section('script-end')
     @parent
+    <script type="text/javascript" src="{{ url('assets/plugins/selectize/js/selectize.js')}}"></script>
+    <script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/jquery-ui.js')}}"></script>
+    <script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/addon/timepicker/jquery-ui-timepicker.js')}}"></script>
+    <script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/jquery-ui-touch.js')}}"></script>
+    <script type="text/javascript" src="{{ url('assets/plugins/inputmask/js/inputmask.js')}}"></script>
+    <script type="text/javascript" src="{{ url('assets/plugins/select2/js/select2.js')}}"></script>
+    <script type="text/javascript" src="{{ url('assets/plugins/touchspin/js/jquery.bootstrap-touchspin.js')}}"></script>
+    <script type="text/javascript" src="{{ url('assets/javascript/backend/forms/element.js')}}"></script>
+
+    <script type="text/javascript" src="{{ url('assets/plugins/datatables/js/jquery.dataTables.js')}}"></script>
+    <script type="text/javascript" src="{{ url('assets/plugins/datatables/tabletools/js/dataTables.tableTools.js')}}"></script>
+    <script type="text/javascript" src="{{ url('assets/plugins/datatables/js/datatables-bs3.js')}}"></script>
+    <script src="{{ asset('vendor/bootbox.js') }}"></script>
     <script>
         $(function(){
             $(document).on('click', '.btn-reset-password', function(e){
                 e.preventDefault();
                 var btn = $(e.currentTarget);
-
+                console.log(btn);
                 bootbox.confirm("Password lama akan dihapus dan password baru akan digenerate secara otomatis oleh sistem. Anda yakin ingin melanjutkan?", function(result) {
                     if(result)
                     {
-                        btn.button('loading');
+                        //btn.button('loading');
                         $.ajax({
                             url: btn.attr('href'),
                             type: 'get',
@@ -96,7 +118,7 @@
                         }).fail(function(){
                             alert('Oops, tidak bisa melakukan perubahan password saati ini. Coba lagi beberapa saat atau hubungi admin.');
                         }).always(function(){
-                            btn.button('reset');
+                            //btn.button('reset');
                         });
                     }
                 });

@@ -7,11 +7,11 @@
 <section id="header" role="header">
   <div class="appHeader">
             <div class="headerLogo">
-                <img alt="logo" src="{{ url('/images/logo.png')}}" height="54" />
+                <img alt="logo" src="{{ url('/images/logo_icon.png')}}" height="54" />
             </div>
             <div class="headerTitle">
                 <span id="headerTitleSpan">
-                    SIMJARI - BBWSV
+                    SIMJALA PANDEGLANG
                 </span>
                 <div id="subHeaderTitleSpan" class="subHeaderTitle">
                     
@@ -130,6 +130,24 @@
                         <button type="button" class="btn btn-primary btn-search" id="btn-search"><i class="ico-search3"></i></button>
                       </span>
                   </div>
+                  <select name="provinsi" id="provinsi" class="form-control">
+                  </select>
+                  <select name="kabkota" id="kabkota" class="form-control">
+                  </select>
+                  <select name="kecamatan" id="kecamatan" class="form-control">
+                  </select>
+                  <select name="desa" id="desa" class="form-control">
+                  </select>
+                  
+                  <div id="dialog" title="Basic dialog">
+                      <p>This is an animated dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+                  </div>
+                  <div id="dialog_legenda" title="Basic dialog">
+                      <div id="legendaDiv"></div>
+                  </div>
+                  <button id="opener">Open Dialog</button>
+                  
+                  
                 </div>
               </div>
             </div>
@@ -153,13 +171,14 @@
     <link rel="stylesheet" href="{{ url('stylesheet/bootstrap.css')}}">
     <link rel="stylesheet" href="{{ url('stylesheet/layout.css')}}">
     <link rel="stylesheet" href="{{ url('stylesheet/uielement.css')}}">
-    <link rel="stylesheet" href="{{ url('css/main.css')}}">
+    <link rel="stylesheet" href="{{ url('css/main_op.css')}}">
     <!--/ Application stylesheet -->
 
     <link rel="stylesheet" href="{{ url('assets/plugins/selectize/css/selectize.css')}}">
     <link rel="stylesheet" href="{{ url('assets/plugins/jquery-ui/css/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{ url('assets/plugins/select2/css/select2.css')}}">
     <link rel="stylesheet" href="{{ url('assets/plugins/touchspin/css/touchspin.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url('assets/plugins/jquery-ui/css/jquery-ui.css')}}" />
 
     <link rel="stylesheet" href="https://openlayers.org/en/v4.4.2/css/ol.css" type="text/css">
     <link type="text/css" rel="stylesheet" href="{{ url('assets/plugins/layout/layout-default-latest.css')}}" />
@@ -321,6 +340,10 @@
   var container_popup,content_popup,closer_popup,overlay_popup;
   var DefaultCoordinate = [105.3795004,-6.445772];
   var geolocation;
+  var provinsi = $('select#provinsi');
+  var kabkota = $('select#kabkota');
+  var kecamatan = $('select#kecamatan');
+  var desa = $('select#desa');
       var basemapTile = new ol.layer.Tile({
           source: new ol.source.XYZ({
                     //attributions: [attribution],
@@ -336,7 +359,7 @@
       var __root__ = new ol.layer.Tile({
         visible: true,
         source: new ol.source.TileWMS({
-          url: '/geoserver/wms',
+          url: window.Laravel.geoserver_url+'/geoserver/wms',
           params: {
             'FORMAT': 'image/png', 
             'VERSION': '1.1.1',
@@ -635,8 +658,9 @@ function objLayer(overlaysOBJ) {
       $(element).appendTo($('#layercontrol').find('.panel').find('ul#list-group-'+_layer.kodegroup.split(":")[1]));
       
       //$('#layertree').empty().append(ul_layer_tematik);
+      console.log(_layer);
       var wmsSource = new ol.source.TileWMS({     
-        url: overlaysOBJ[i].urllayer/*'/geoserver/wms'*/,
+        url: window.Laravel.geoserver_url+overlaysOBJ[i].urllayer/*'/geoserver/wms'*/,
         params: {
           'LAYERS': overlaysOBJ[i].kodelayer,
           'VERSION': '1.1.1',
@@ -676,7 +700,14 @@ function tablePopup(feature){
         for (var name in feature[f].properties) {
           var fp = feature[f].properties;
           if (name == 'image_link' || name == 'IMAGE_LINK' || name == 'foto' || name == 'FOTO') {
-            content += "<tr><td><b>" + name + "</b></td><td><b>:</b> </td><td><image class='img-responsive' src='" + fp[name] + "' width='100'/></td></tr>";
+            content += "<tr><td><b>" + name + "</b></td><td><b>:</b> </td><td><image class='img-responsive' src='../images/pandeglang/" + fp[name] + "' width='100'/></td></tr>";
+          }else if(name == 'video'){
+            content += "<tr><td><b>" + name + "</b></td><td><b>:</b> </td><td>"+
+              "<video width='100%' autoplay loop preload >"+
+                "<source src='"+fp[name]+"' type='video/mp4'>"+
+                "Your browser does not support HTML5 video."+
+              "</video>"+
+            "</td></tr>";
           }else if(name == 'bbox'){
           }else{
             content += "<tr><td><b>" + name + "</b></td><td><b>:</b> </td><td>" + fp[name] + "</td></tr>";    
@@ -798,7 +829,7 @@ function buildLayer(_layer) {
       fieldset_legenda.setAttribute('id','legend');
       fieldset_legenda.setAttribute('style','display:none');
         var img_legend = document.createElement('img');
-        img_legend.setAttribute('src','/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER='+_layer.kodelayer);
+        img_legend.setAttribute('src',Laravel.geoserver_url+'/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER='+_layer.kodelayer);
         img_legend.setAttribute('alt','Legenda');
       fieldset_legenda.append(img_legend);
       li_layer.append(fieldset_legenda);
@@ -1015,9 +1046,103 @@ function updateFilter(){
     $("#btn-reset").click(function(e){
       resetFilter();
     });
+    loadProvinsi();
+    provinsi.on('change',function(e){
+      console.log($(this).find(":selected").val());
+      loadKabupaten($(this).find(":selected").val());
+    });
+    kabkota.on('change',function(e){
+      console.log($(this).find(":selected").val());
+      loadKecamatan($(this).find(":selected").val());
+    });
+    kecamatan.on('change',function(e){
+      console.log($(this).find(":selected").val());
+      loadDesa($(this).find(":selected").val());
+    });
+    $("#dialog").dialog({
+                    autoOpen: false,
+                    show: {
+                        effect: "blind",
+                        duration: 1000
+                    },
+                    hide: {
+                        effect: "explode",
+                        duration: 1000
+                    }
+    });
+    $("#dialog_legenda").dialog({
+      autoOpen:true
+    }).position({my: 'bottom',at: 'left',});
+    $("#opener").click(function() {
+      $("#dialog").dialog("open");
+    });
 
     
 	});
+</script>
+<script>
+function loaddatawilayah(url,data=''){
+    console.log('Load adata',url)
+    return $.ajax({
+        url: url,
+        dataType: "json",
+        beforeSend: function() {
+            $('.loader').show();
+            $("#loader-wrapper").show();
+        },
+    });
+    
+}
+function loadProvinsi(){
+    loaddatawilayah('/api/getprovinsi').then(function(data){
+        var options = '<option value="0">Pilih Provinsi..</option>';
+        for (var x = 0; x < data.length; x++) {
+            var selected = (data[x]['kode_prov'] == $('#kode_prov').val()) ? "selected":"";
+            options += '<option value="' + data[x]['kode_prov'] + '"'+ selected +'>' + data[x]['nama_provinsi'] + '</option>';
+        }
+        provinsi.html(options);
+        $("#loader-wrapper").hide();
+    });
+}
+function loadKabupaten(id){
+    kabkota.html("<option value=''>Pilih Kota..</option>");
+    loaddatawilayah('/api/getkabupaten/'+id).then(function(data){
+        var options = '<option value="0">Pilih Kota..</option>';
+        for (var x = 0; x < data.length; x++) {
+            var selected = (data[x]['kode_kab'] == $('#kode_kab').val()) ? "selected":"";
+            options += '<option value="' + data[x]['kode_kab'] + '"'+ selected +'>' + data[x]['nama_kabupaten'] + '</option>';    
+        }
+        kabkota.select2();
+        kabkota.html(options);
+        $("#loader-wrapper").hide();
+    });
+}
+function loadKecamatan(id){
+    kecamatan.html("<option value=''>Pilih Kecamatan..</option>");
+    loaddatawilayah('/api/getkecamatan/'+id).then(function(data){
+        var options = '<option value="0">Pilih Kecamatan..</option>';
+        for (var x = 0; x < data.length; x++) {
+            var selected = (data[x]['kode_kec'] == $('#kode_kec').val()) ? "selected":"";
+            options += '<option value="' + data[x]['kode_kec'] + '" '+ selected +'>' + data[x]['nama_kecamatan'] + '</option>';    
+        }
+        kecamatan.select2();
+        kecamatan.html(options);
+        $("#loader-wrapper").hide();
+    });
+}
+function loadDesa(id){
+    desa.html("<option value=''>Pilih Desa/Kelurahan..</option>");
+    loaddatawilayah('/api/getdesa/'+id).then(function(data){
+        var options = '<option value="0">Pilih Desa..</option>';
+        for (var x = 0; x < data.length; x++) {
+            var selected = (data[x]['kode_kel'] == $('#kode_kel').val()) ? "selected":"";
+            options += '<option value="' + data[x]['kode_desa'] + '" '+ selected +'>' + data[x]['nama_desa'] + '</option>';    
+        }
+        desa.select2();
+        desa.html(options);
+        $("#loader-wrapper").hide();
+    });
+}
 </script>
 
 @endsection

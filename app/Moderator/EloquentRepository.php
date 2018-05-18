@@ -345,4 +345,8 @@ class EloquentRepository implements RepositoryInterface{
         imagedestroy($im);
         return true;
     }
+
+    function countUser(){
+        return $this->user->count();
+    }
 }

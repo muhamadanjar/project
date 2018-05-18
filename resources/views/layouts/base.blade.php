@@ -36,6 +36,7 @@
         <script>
             window.Laravel = <?php echo json_encode([
                 'csrfToken' => csrf_token(),
+                'geoserver_url' => getenv('GEOSERVER_URL'),
             ]); ?>
         </script>
     </head>

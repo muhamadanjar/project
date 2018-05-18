@@ -50,7 +50,7 @@
                         </td>
                         <td>{{ $p->namalayer }}</td>
                         <td><span class="badge badge-primary">{{ $p->kodelayer }}</span></td>
-                        <td>{{ $p->groups->namalayer }}</td>        
+                        <td>@if(isset($p->groups->namalayer)) {{ $p->groups->namalayer }} @endif</td>        
                     </tr>
                     @endforeach
                 </tbody>
